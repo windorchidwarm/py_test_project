@@ -20,6 +20,14 @@ def is_prime(n):
 
 
 def find(a,used,matched,ou):
+    '''
+    匈牙利算法
+    :param a:
+    :param used:
+    :param matched:
+    :param ou:
+    :return:
+    '''
     for i in range(0,len(ou)):
         if is_prime(a+ou[i]) and used[i]==0:
             used[i]=1
@@ -30,6 +38,7 @@ def find(a,used,matched,ou):
 
 if __name__ == '__main__':
     # print(int(math.sqrt(8)))
+    # 求一个数组中的素数伴侣的最大值
     n = input().strip()
     data = list(map(int, input().strip().split(' ')))
 
@@ -46,14 +55,3 @@ if __name__ == '__main__':
         if find(ji[i], used, match, ou):
             result += 1
     print(result)
-
-    # dp = [0 for i in range(int(n) + 1)]
-    # cnt = 0
-    # for i in range(int(n) - 2, -1, -1):
-    #     for j in range(int(n) - 1, i, -1):
-    #         cnt = (dp[j + 1] + dp[i + 1] - dp[j - 1] + 1) if is_prime(data[i] + data[j]) else dp[i + 1]
-    #         dp[i] = max(dp[i], cnt)
-    #         print('...' + str(dp))
-    #     print(dp)
-    # print(dp)
-    # print(dp[0])
