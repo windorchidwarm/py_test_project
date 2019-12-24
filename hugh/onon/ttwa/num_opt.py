@@ -8,6 +8,14 @@
 
 import re
 
+
+def fib(num):
+    if num == 1 or num == 2:
+        return 1
+    else:
+        return fib(num - 1) + fib(num - 2)
+
+
 if __name__ == '__main__':
     print('-----')
     # s = '47Aa'
@@ -24,31 +32,33 @@ if __name__ == '__main__':
     #     r_s = str(hex(int(t_s, 2))).replace('0x', '')
     #     print(r_s.upper())
 
-    line = input().strip()
-    data = line.replace(' ', '')
-    p = []
-    d = []
-    for i in range(len(data)):
-        if i % 2 == 0:
-            p.append(data[i])
-        else:
-            d.append(data[i])
-    p.sort()
-    d.sort()
+    # line = input().strip()
+    # data = line.replace(' ', '')
+    # p = []
+    # d = []
+    # for i in range(len(data)):
+    #     if i % 2 == 0:
+    #         p.append(data[i])
+    #     else:
+    #         d.append(data[i])
+    # p.sort()
+    # d.sort()
+    #
+    # mes = ''
+    # for i in range(len(p)):
+    #     mes += (p[i] + d[i]) if i < len(d) else p[i]
+    #
+    # r_mes = ''
+    # for r in mes:
+    #     if bool(re.search('[a-fA-F0-9]', r)):
+    #         r_list = list(str(bin(int(r, 16))).replace('0b', ''))
+    #         r_list.reverse()
+    #         r_r = ''.join(r_list)
+    #         if len(r_list) < 4:
+    #             r_r += '0' * (4 - len(r_list))
+    #         r_mes += str(hex(int(r_r, 2))).replace('0x', '').upper()
+    #     else:
+    #         r_mes += r
+    # print(r_mes)
 
-    mes = ''
-    for i in range(len(p)):
-        mes += (p[i] + d[i]) if i < len(d) else p[i]
-
-    r_mes = ''
-    for r in mes:
-        if bool(re.search('[a-fA-F0-9]', r)):
-            r_list = list(str(bin(int(r, 16))).replace('0b', ''))
-            r_list.reverse()
-            r_r = ''.join(r_list)
-            if len(r_list) < 4:
-                r_r += '0' * (4 - len(r_list))
-            r_mes += str(hex(int(r_r, 2))).replace('0x', '').upper()
-        else:
-            r_mes += r
-    print(r_mes)
+    print(fib(9))
