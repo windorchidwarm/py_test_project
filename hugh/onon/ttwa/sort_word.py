@@ -79,6 +79,26 @@ def encry_line(en_key, en_str):
     return msg
 
 
+
+def word_count(line):
+    '''
+    输入一行字符，分别统计出包含英文字母、空格、数字和其它字符的个数。
+    :param line:
+    :return:
+    '''
+    a, b, c, d = 0,0,0,0
+    for v in line:
+        if bool(re.search('[a-zA-Z]', v)):
+            a += 1
+        elif v == ' ':
+            b += 1
+        elif bool(re.search('[0-9]', v)):
+            c += 1
+        else:
+            d += 1
+    return a,b,c,d
+
+
 if __name__ == '__main__':
     print('-----------')
 
@@ -92,4 +112,11 @@ if __name__ == '__main__':
     print(encry_line(en_key, en_str))
     print(ord('A'))
     print(ord('a'))
+
+    line = r'1qazxsw23 edcvfr45tgbn hy67uj m,ki89ol.\\/;p0-=\\]['
+    a, b, c, d = word_count(line)
+    print(a)
+    print(b)
+    print(c)
+    print(d)
 
