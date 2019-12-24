@@ -3,33 +3,73 @@
 # @Time : 2019/12/20 15:23 
 # @Author : Aries 
 # @Site :  
-# @File : mm.py 
+# @File : ip_and_move.py
 # @Software: PyCharm
 
 # A10;S20;W10;D30;X;A1A;B10A11;;A10;
 
 import sys
 
+def move(data):
+    '''
+    坐标移动
+    :param line:
+    :return:
+    '''
+    x,y = 0,0
+    for line in data:
+        str_add = line[1:]
+
+        if str_add is None or str_add == '' or not str_add.isdigit():
+            continue
+
+        simbol = line[0:1]
+        if simbol == 'A':
+            x = x - int(str_add)
+        elif simbol == 'D':
+            x = x + int(str_add)
+        elif simbol == 'W':
+            y = y + int(str_add)
+        elif simbol == 'S':
+            y = y - int(str_add)
+    return x,y
+
+
+def ip_to_num(ip_str):
+    '''
+    ip 字符串转换为 数字
+    :param ip_str:
+    :return:
+    '''
+    ips = ip_str.strip().split('.')
+    num_str = ''
+    for ip in ips:
+        num_str += '{:08b}'.format(int(ip))
+        # ip_in = str(bin(int(ip))).replace('0b', '')
+        # ip_in = ('0' * (8 - len(ip_in))) + ip_in
+        # num_str += ip_in
+    return int(num_str, 2)
+
+
+def num_to_ip(num):
+    '''
+    数字转换为Ip字符串
+    :param num:
+    :return:
+    '''
+    # bi_ip = str(bin(num)).replace('0b', '')
+    # bi_ip = ('0' * (32 - len(bi_ip))) + bi_ip
+    bi_ip = '{:032b}'.format(num)
+    ip_str = ''
+    for i in range(4):
+        ip_str += str(int(bi_ip[0 + 8 * i :8 + 8 * i], 2)) + '.'
+    ip_str = ip_str[0: -1]
+    return  ip_str
+
+
 if __name__ == '__main__':
     # s = input().split(';')
-    # x, y = 0, 0
-    # for i in range(len(s)):
-    #     str = s[i]
-    #     if str is None or str == '':
-    #         continue
-    #     str_add = str[1:]
-    #     if str_add is None or str_add == '' or not str_add.isdigit():
-    #         continue
-    #
-    #     simbol = str[0:1]
-    #     if simbol == 'A':
-    #         x = x - int(str_add)
-    #     elif simbol == 'D':
-    #         x = x + int(str_add)
-    #     elif simbol == 'W':
-    #         y = y + int(str_add)
-    #     elif simbol == 'S':
-    #         y = y - int(str_add)
+    # x, y = move(s)
     # print(x, ",", y)
 
     # tmp = '254'
@@ -154,27 +194,6 @@ if __name__ == '__main__':
     siyo = 0
 
 
-    def congzu(a, x):
-        k = ''
-        h = []
-        if a[-1] != x:
-            a = a + x
-            for i in a:
-                if i != x:
-                    k = k + str(i)
-                else:
-                    h.append(k)
-                    k = ''
-        else:
-            for i in a:
-                if i != x:
-                    k = k + str(i)
-                else:
-                    h.append(k)
-                    k = ''
-        return h
-
-
     apt = []
     try:
         while True:
@@ -188,7 +207,7 @@ if __name__ == '__main__':
         Ide = v.index('~')
         IP = v[:Ide]
         IPY = v[Ide + 1:]
-        ym = list(filter(None, congzu(IPY, '.')))
+        ym = list(filter(None, IPY.split('.')))
         print(ym)
         if len(ym) == 4 and ym != ['255', '255', '255', '255'] and ym != ['0', '0', '0', '0']:
             t = 1
@@ -253,3 +272,8 @@ if __name__ == '__main__':
         else:
             count = count + 1
     print(str(A) + ' ' + str(B) + ' ' + str(C) + ' ' + str(D) + ' ' + str(E) + ' ' + str(count) + ' ' + str(siyo))
+
+    # line = input().strip()
+    # ip_num = int(input().strip())
+    # print(ip_to_num(line))
+    # print(num_to_ip(ip_num))
