@@ -7,6 +7,9 @@
 # @Software: PyCharm
 
 
+import math
+
+
 def snake_metri(num):
     '''
     输入 4  输出
@@ -26,7 +29,24 @@ def snake_metri(num):
         print(msg)
 
 
+def sport_line(hight, num):
+    '''
+    高度 hight
+    第num次落地的距离和反弹高度
+    :param hight:
+    :param num:
+    :return:
+    '''
+    if num == 1:
+        return hight, hight/2
+    else:
+        return hight * 3 - hight / math.pow(2, num - 2), hight / math.pow(2, num)
+
 
 if __name__ == '__main__':
     print('----')
     snake_metri(5)
+    x,y = sport_line(38801, 5)
+    print('%g' % x)
+    print('%g' % y)
+    print(x, y)
