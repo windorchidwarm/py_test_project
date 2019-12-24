@@ -9,11 +9,17 @@
 import re
 
 
+fib_num = dict()
+
 def fib(num):
     if num == 1 or num == 2:
         return 1
+    elif num in fib_num.keys():
+        return fib_num.get(num)
     else:
-        return fib(num - 1) + fib(num - 2)
+        res = fib(num - 1) + fib(num - 2)
+        fib_num[num] = res
+        return res
 
 
 if __name__ == '__main__':
