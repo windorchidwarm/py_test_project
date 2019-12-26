@@ -23,15 +23,18 @@ def cal_num(cal_str):
     for i in cal_str:
         if re.match('[0-9]', i):
             num += i
-        elif i == ' ':
+        elif i == '':
             continue
         else:
             if i == '-' and num == '' and cal_list[-1] == '(':
                 num += i
             else:
-                cal_list.append(num)
+                if len(num) > 0:
+                    cal_list.append(num)
+                    num = ''
                 cal_list.append(i)
-                num = ''
+
+        print(cal_list)
     if len(num) > 0:
         cal_list.append(num)
     print(cal_list)
@@ -97,5 +100,5 @@ if __name__ == '__main__':
     [‘0’-‘9’],‘+’,‘-’, ‘*’,‘/’ ,‘(’， ‘)’,‘[’, ‘]’,‘{’ ,‘}’。
     3+2*{1+2*[-4/(8-6)+7]}
     '''
-    cal = '3-10+(0+(10+5+3)-10)'
+    cal = '(7+5*4*3+6)'
     cal_num(cal)
