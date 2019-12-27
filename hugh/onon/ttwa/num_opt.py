@@ -7,11 +7,17 @@
 # @Software: PyCharm
 
 import re
+import math
 
 
 fib_num = dict()
 
 def fib(num):
+    '''
+    斐波那契数列
+    :param num:
+    :return:
+    '''
     if num == 1 or num == 2:
         return 1
     elif num in fib_num.keys():
@@ -20,6 +26,30 @@ def fib(num):
         res = fib(num - 1) + fib(num - 2)
         fib_num[num] = res
         return res
+
+
+
+def valid_perfect_num(n):
+    '''
+    判断n是否是完全数
+    :param n:
+    :return:
+    '''
+    # count = 0
+    # for i in range(1, int(n / 2) + 1):
+    #     if n % i == 0:
+    #         count += i
+    m = int(math.sqrt(n))
+    count = 1
+    for i in range(2, m+1):
+        if n % i == 0:
+            count += i
+            count += int(n / i)
+    if count == n:
+        return True
+    else:
+        return False
+
 
 
 if __name__ == '__main__':
@@ -66,5 +96,10 @@ if __name__ == '__main__':
     #     else:
     #         r_mes += r
     # print(r_mes)
-
+    count = 0
+    for i in range(2, 2670):
+        if valid_perfect_num(i):
+            count += 1
+        print(i, valid_perfect_num(i), count)
+    print(count)
     print(fib(9))
