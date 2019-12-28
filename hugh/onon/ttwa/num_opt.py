@@ -99,6 +99,17 @@ def arange_right(data, left, right, k):
         return arange_right(data, left, i + tmp, k)
 
 
+def is_prime(num):
+    '''
+    是否是素数
+    :param num:
+    :return:
+    '''
+    for i in range(2, int(math.sqrt(num)) + 1):
+        if num % i == 0:
+            return False
+    return True
+
 if __name__ == '__main__':
     print('-----')
     # s = '47Aa'
@@ -160,3 +171,14 @@ if __name__ == '__main__':
     n_data = n_data[0:n]
     n_data = sorted(n_data)
     print(' '.join([str(j) for j in n_data]))
+
+    num = int(input().strip())
+    a, b = int(num / 2), 0
+
+    while a > 1:
+        b = num - a
+        if is_prime(a) and is_prime(b):
+            break
+        a -= 1
+    print(a)
+    print(b)
