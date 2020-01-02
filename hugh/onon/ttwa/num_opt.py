@@ -110,6 +110,26 @@ def is_prime(num):
             return False
     return True
 
+
+def max_area(hights):
+    '''
+    双指针法正确性证明
+    以i,j表示前后指针，H[i]表示位置i处的高度，n是输入的数据长度。S(i,j) = min(H[i],H[j]) * (j - i)S(i,j)=min(H[i],H[j])∗(j−i)是(i,j)对的面积。
+    :param hights:
+    :return:
+    '''
+    l = 0
+    r = len(hights) - 1
+    max_a = 0
+    while l < r:
+        max_a = max(max_a, min(hights[l], hights[r]) * (r - l))
+        if hights[l] > hights[r]:
+            r -= 1
+        else:
+            l += 1
+    return max_a
+
+
 if __name__ == '__main__':
     print('-----')
     # s = '47Aa'
