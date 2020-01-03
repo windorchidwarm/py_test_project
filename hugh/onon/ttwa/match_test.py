@@ -59,15 +59,16 @@ def is_match(s, p):
     memo = {}
 
     def dp(i, j):
-        if j == len(p):
-            ans = (i == len(s))
-        else:
-            f_match = i < len(s) and p[j] in [s[i], '.']
-            if j + 1 < len(p) and p[j + 1] == '*':
-                ans = dp(i, j +2) or f_match and dp(i + 1, j)
+        if (i, j) not in memo:
+            if j == len(p):
+                ans = (i == len(s))
             else:
-                ans = f_match and dp(i + 1, j + 1)
-        memo[i, j] = ans
+                f_match = i < len(s) and p[j] in [s[i], '.']
+                if j + 1 < len(p) and p[j + 1] == '*':
+                    ans = dp(i, j +2) or f_match and dp(i + 1, j)
+                else:
+                    ans = f_match and dp(i + 1, j + 1)
+            memo[i, j] = ans
         print(memo)
         return memo[i, j]
     return dp(0, 0)
