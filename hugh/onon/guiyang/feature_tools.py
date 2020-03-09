@@ -28,6 +28,7 @@ if __name__ == '__main__':
     es.normalize_entity(base_entity_id='bigmart', new_entity_id='sasa', index='编号', additional_variables=r_lsit)
     # print(es)
     feature_matrix_customers, features_dfs = ft.dfs(entityset=es, target_entity='bigmart', max_depth=2, n_jobs=3, verbose=1)
+    feature_matrix_customers = feature_matrix_customers.reset_index()
     print('***************')
 
     print(feature_matrix_customers)
