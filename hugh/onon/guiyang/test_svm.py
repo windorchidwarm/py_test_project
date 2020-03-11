@@ -50,6 +50,39 @@ def svc_test(df, label):
     print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
 
+def test_svm_svr(df, label):
+    '''
+        svm 分类模型
+        :param df:
+        :return:
+        '''
+    y = df[label]
+    X = df.loc[:, df.columns != label]
+    print('yyyyyyyyyyyyyyy')
+    print(y)
+    print(X)
+    print(y.values)
+    print(X.values)
+    # clf = svm.SVC(C=1, kernel='rbf', gamma=1, decision_function_shape='ovo')
+    # res = clf.fit(X.values, y.values)
+    # print(clf.fit_status_)
+    # print(res)
+    # dd = res.predict(X.values)
+    # print(dd)
+
+    svr = svm.SVR()
+    parmaters = {'C': [1, 2, 3, 4]}
+    # cls = svm.SVR(C=C, kernel=kernel, degree=degree, tol=tol, class_weight=class_weight, max_iter=max_iter,
+    #               gamma=gamma)
+    param_search = RandomizedSearchCV(estimator=svr,
+                                      param_distributions=parmaters,
+                                      cv=2,
+                                      verbose=2)
+    param_search.fit(X.values, y.values)
+    print(param_search.best_estimator_)
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+
 
 
 def test_svm_svc():
@@ -97,4 +130,5 @@ if __name__ == '__main__':
     updf = updf.append(updf, ignore_index=True, sort=False)
     print(updf)
 
-    svc_test(updf, label)
+    # svc_test(updf, label)
+    test_svm_svr(updf, label)
