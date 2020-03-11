@@ -9,7 +9,7 @@
 
 import featuretools as ft
 import pandas as pd
-
+import re
 
 if __name__ == '__main__':
     '''
@@ -37,4 +37,14 @@ if __name__ == '__main__':
     print('***************')
     print(features_dfs)
     feature_matrix_customers.to_csv(r'C:\Users\BBD\Desktop\test\tmp\xxxxx.csv')
+
+    outColumns = []
+    oldColumns = feature_matrix_customers.columns
+    for i in range(len(oldColumns)):
+        strinfo = re.compile('[.()]')
+        outColumns.append(strinfo.sub('_', oldColumns[i]))
+        # outColumns.append(oldColumns[i].replace('[.()]', '_'))
+
+    feature_matrix_customers.columns = outColumns
+    print(feature_matrix_customers.columns)
 

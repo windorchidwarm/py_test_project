@@ -11,6 +11,7 @@ import pandas as pd
 from sklearn import svm
 import numpy as np
 from scipy import stats
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
 
 def svc_test(df, label):
@@ -32,6 +33,23 @@ def svc_test(df, label):
     print(res)
     dd = res.predict(X.values)
     print(dd)
+
+    csv = svm.SVC()
+    parmaters = { 'C':[1,2,3,4]}
+    # gsc = GridSearchCV(csv, parmaters, cv=2, verbose=2)
+    # print(gsc)
+    # gsc.fit(X.values, y.values)
+    # print(gsc.cv_results_)
+
+    param_search = RandomizedSearchCV(estimator=csv,
+                                      param_distributions=parmaters,
+                                      cv=2,
+                                      verbose=2)
+    param_search.fit(X.values, y.values)
+    print(param_search.best_estimator_)
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+
 
 
 def test_svm_svc():
@@ -75,5 +93,8 @@ if __name__ == '__main__':
     # labels = ['编号', '商场ID', '商户ID', '单位面积营业额', '单位面积租金']
     updf = df[['编号', '商场ID', '商户ID', '单位面积营业额', '客流转换率变化情况']]
     label = '编号'
+    updf = updf.append(updf, ignore_index=True, sort=False)
+    updf = updf.append(updf, ignore_index=True, sort=False)
     print(updf)
+
     svc_test(updf, label)
