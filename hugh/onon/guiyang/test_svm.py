@@ -82,6 +82,10 @@ def test_svm_svr(df, label):
                                       verbose=2)
     param_search.fit(X.values, y.values)
     print(param_search.best_estimator_)
+    print(svr)
+    svr.degree = param_search.best_estimator_.degree
+    print(svr)
+    print(param_search.estimator)
     print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
 
