@@ -71,7 +71,9 @@ def test_svm_svr(df, label):
     # print(dd)
 
     svr = svm.SVR()
-    parmaters = {'C': [1, 2, 3, 4]}
+    svr.kernel = 'rbf'
+    svr.gamma = 2
+    parmaters = {'C': [1, 2, 3, 4], 'degree':[1, 2, 3, 4]}
     # cls = svm.SVR(C=C, kernel=kernel, degree=degree, tol=tol, class_weight=class_weight, max_iter=max_iter,
     #               gamma=gamma)
     param_search = RandomizedSearchCV(estimator=svr,
