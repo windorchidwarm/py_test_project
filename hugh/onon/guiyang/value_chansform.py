@@ -22,5 +22,6 @@ if __name__ == '__main__':
     updf = updf.append(updf, ignore_index=True, sort=False)
     updf = updf.append(updf, ignore_index=True, sort=False)
     print(updf)
-    updf['编号'] = np.log2((1+updf["编号"]))
+    field_name = '编号'
+    updf[field_name] = np.log2((1+updf[field_name]))
     print(updf)
