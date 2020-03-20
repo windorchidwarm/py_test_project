@@ -19,7 +19,7 @@ def test_mean_shift(df, label):
     :param label:
     :return:
     '''
-    mean_shift =  MeanShift(bandwidth=10)
+    mean_shift =  MeanShift(bandwidth=10, seeds=[10])
     y = df[label]
     X = df.loc[:, df.columns != label]
     print(mean_shift)
