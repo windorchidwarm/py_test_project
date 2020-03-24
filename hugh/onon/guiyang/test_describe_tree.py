@@ -31,6 +31,7 @@ def decision_tree_classifier(df, label):
     pre = pd.DataFrame(y_p)
     pre.columns = ['prediction']
     print(metrics.mean_squared_error(np.array(y), np.array(pre['prediction'])))
+    print(metrics.mean_squared_error(y.values, pre['prediction'].values))
 
 
 
