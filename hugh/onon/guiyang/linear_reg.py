@@ -12,6 +12,11 @@ import statsmodels.api as sm
 
 
 
+def getDataFrameResTable(res, i):
+    resHtml = res.tables[i].as_html()
+    temp = pd.read_html(resHtml)[0]
+    return temp.to_json(orient='index')
+
 def test_linear(X, y):
     '''
 
@@ -26,6 +31,12 @@ def test_linear(X, y):
     trainDf = pd.DataFrame(est.fittedvalues)
     trainDf.columns = ['prediction']
     print(res)
+    table0 = getDataFrameResTable(res, 0)
+    table1 = getDataFrameResTable(res, 1)
+    table2 = getDataFrameResTable(res, 2)
+    print(table0)
+
+
 
 if __name__ == '__main__':
     print('xxx')
