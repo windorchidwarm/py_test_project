@@ -19,3 +19,5 @@ if __name__ == '__main__':
     print(json.dumps({"0":"这是"}))
     print(json.dumps({"0": "来这里了"}))
     print(float('-inf'))
+
+    data = {}
