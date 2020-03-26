@@ -20,7 +20,8 @@ def test_plot():
     print(df)
     print(df.columns)
 
-    my_font = fm.FontProperties(fname=r'C:\Windows\Fonts\STXINGKA.TTF')
+    # my_font = fm.FontProperties(fname=r'C:\Windows\Fonts\STXINGKA.TTF')
+    my_font = fm.FontProperties(fname=r'E:\BaiduNetdiskDownload\汉仪大隶书繁.ttf')
 
     # ln1, = plt.plot(df['company_province'],df['year_2019_after_df_count'],color='red',linewidth=2.0,linestyle='--')
     # ln2, = plt.plot(df['company_province'],df['year_2020_after_df_count'],color='blue',linewidth=3.0,linestyle='-.')
@@ -58,3 +59,4 @@ def over_lap_test():
 
 if __name__ == '__main__':
     print('xxx')
+    test_plot()
