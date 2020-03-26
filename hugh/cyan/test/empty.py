@@ -21,3 +21,11 @@ if __name__ == '__main__':
     print(float('-inf'))
 
     data = {}
+    data['xxx'] = 1
+    data['yyyy'] = 2
+    print(data)
+    data.pop('xxx')
+    print(data)
+    if 'xy' in data.keys():
+        del data['xy']
+    print(data)
