@@ -11,6 +11,12 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm  #字体管理器
+import os
+
+COMPONENT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__))
+                              .replace(os.path.join('hugh', os.path.join("onon","guiyang")),''),"files")
+
+
 
 def test_plot():
     df = pd.read_csv(r'C:\Users\BBD\Desktop\test\tmp\recruit_index_by_province_result.csv', encoding="utf-8", header=0)
@@ -21,7 +27,8 @@ def test_plot():
     print(df.columns)
 
     # my_font = fm.FontProperties(fname=r'C:\Windows\Fonts\STXINGKA.TTF')
-    my_font = fm.FontProperties(fname=r'E:\BaiduNetdiskDownload\汉仪大隶书繁.ttf')
+    # my_font = fm.FontProperties(fname=r'E:\BaiduNetdiskDownload\汉仪大隶书繁.ttf')
+    my_font = fm.FontProperties(fname=os.path.join(COMPONENT_PATH,"msyhbd.ttc"))
 
     # ln1, = plt.plot(df['company_province'],df['year_2019_after_df_count'],color='red',linewidth=2.0,linestyle='--')
     # ln2, = plt.plot(df['company_province'],df['year_2020_after_df_count'],color='blue',linewidth=3.0,linestyle='-.')
