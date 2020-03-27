@@ -52,7 +52,9 @@ def test_plot():
     plt.title('2019 vs.2020')  # 显示统计标题
     dfgp1.plot.line(label='after 2019')  # 2019春节后
     dfgp2.plot.line(label='after 2020')  # 2020春节后
+    # plt.title("中文")
     plt.xticks(fontproperties=my_font)
+
 
     plt.tick_params(labelsize=13)
     plt.tight_layout()

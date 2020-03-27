@@ -39,6 +39,7 @@ def test_seaborn():
     # my_font = fm.FontProperties(fname=r'E:\BaiduNetdiskDownload\汉仪大隶书繁.ttf')
     my_font = fm.FontProperties(fname=os.path.join(COMPONENT_PATH,"msyhbd.ttc"))
     seaborn.set_style("darkgrid")
+    plt.title("中文")
     # seaborn.set(font=my_font.get_name())
     p = seaborn.boxplot(x='company_province', y='year_2019_after_df_count', data=df, hue='year_2019_after_df_count')
     result = p.get_figure()
@@ -47,8 +48,26 @@ def test_seaborn():
     plt.show()
 
 
+def test_seaborn2():
+    # my_font = fm.FontProperties(fname=os.path.join(COMPONENT_FILE_PATH,"msyhbd.ttc"))
+    my_font = fm.FontProperties(fname=r'E:\BaiduNetdiskDownload\汉仪大隶书繁.ttf')
+    # df = pd.read_csv("C:/Users/Administrator/Desktop/test_data_classification.csv")
+    df = pd.read_csv(r'C:\Users\BBD\Desktop\test\tmp\recruit_index_by_province_result.csv', encoding="utf-8", header=0)
 
+    x = "company_province"
+    y = "year_2019_after_df_count"
+
+    # plt.xticks(fontproperties=my_font)
+    seaborn.set_style("darkgrid")
+    # seaborn.set(font=my_font.get_name())
+    p = seaborn.boxplot(x=x, y=y, data=df, hue=y)
+    # plt.title("中文")
+    print(my_font.get_name())
+    p.get_figure()
+    plt.xticks(fontproperties=my_font)
+    plt.show()
 
 if __name__ == '__main__':
     print('xxx')
-    test_seaborn()
+    # test_seaborn()
+    test_seaborn2()
