@@ -73,6 +73,7 @@ def test_svm_svr(df, label):
     svr = svm.SVR()
     svr.kernel = 'rbf'
     svr.gamma = 'scale'
+    svr.random_state = 3
     parmaters = {'C': [1, 2, 3, 4], 'degree':[1, 2, 3, 4]}
     # cls = svm.SVR(C=C, kernel=kernel, degree=degree, tol=tol, class_weight=class_weight, max_iter=max_iter,
     #               gamma=gamma)
