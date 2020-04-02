@@ -15,10 +15,11 @@ def test_lasso(X, label):
     Lasso
     :return:
     '''
-    model = linear_model.Lasso()
+    model = linear_model.Lasso(random_state=9, alpha=1, tol=0.001, max_iter=1000)
     model.fit(X, label)
     print(model)
-    model.predict(X)
+    pre_data = model.predict(X)
+    print(pre_data)
 
 
 def test_rideg(X, label):
@@ -26,10 +27,11 @@ def test_rideg(X, label):
     Lasso
     :return:
     '''
-    model = linear_model.Ridge()
+    model = linear_model.Ridge(random_state=9, alpha=1, solver='auto', tol=0.001, max_iter=1000)
     model.fit(X, label)
     print(model)
-    model.predict(X)
+    pre_data = model.predict(X)
+    print(pre_data)
 
 
 
