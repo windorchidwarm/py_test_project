@@ -7,6 +7,7 @@
 from hugh.spider.utils import html_utils
 
 from bs4 import BeautifulSoup
+# beautifulsoup4 lxml html5lib
 
 
 root_path = r'C:\Users\yhchen\Desktop\test\mike'
