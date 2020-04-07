@@ -50,6 +50,6 @@ if __name__ == '__main__':
     label = '编号'
     y = updf['编号']
     X = updf[['商场ID', '商户ID', '单位面积营业额', '客流转换率变化情况']]
-    test_lasso(X, y)
+    test_lasso(X.values, y.values)
     test_rideg(X, y)
     print(updf)
