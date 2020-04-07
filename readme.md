@@ -16,3 +16,5 @@ hugh.cyan:牛客或者力扣或者其他等学习内容
 hugh.nptest:numpy的测试
 
 hugh.config:config文件
+
+hugh.spark:spark相关测试
