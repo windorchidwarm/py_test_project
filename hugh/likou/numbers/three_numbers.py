@@ -32,6 +32,10 @@ def three_num2(nums):
     三数之和为0
     :param nums:
     :return:
+    先排序
+    然后首尾同号则肯定大于0
+    处理相同的数字
+    左边正数也肯定大于0
     '''
     nums.sort()
     n_len = len(nums)
