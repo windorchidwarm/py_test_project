@@ -8,6 +8,11 @@
 import sys
 
 if __name__ == '__main__':
+    '''
+    N棵桃树 每棵Ni桃 H小时吃完
+    每次吃的桃子数要么这颗树吃完等下一棵，要么吃K个
+    问H小时吃完K的最小值
+    '''
     while True:
         line = sys.stdin.readline().strip()
         if line == '':
