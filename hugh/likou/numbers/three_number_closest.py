@@ -17,7 +17,7 @@ def three_number_closest(nums, target):
     n_len = len(nums)
     i = 0
     ans = nums[0] + nums[1] + nums[2]
-    while i < n_len:
+    while i < n_len - 1:
         if target == ans: break
         start = i + 1
         end = n_len - 1
@@ -35,7 +35,7 @@ def three_number_closest(nums, target):
                 while start < end and nums[end] == nums[end - 1]:
                     end -= 1
                 end -= 1
-        while i < n_len - 1 and nums[i] == nums[i + 1]:
+        while i < n_len - 2 and nums[i] == nums[i + 1]:
             i += 1
         i += 1
     return ans
