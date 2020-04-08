@@ -15,8 +15,10 @@ def three_number_closest(nums, target):
     '''
     nums.sort()
     n_len = len(nums)
+    if n_len < 3: return -1 # 数组不够
     i = 0
     ans = nums[0] + nums[1] + nums[2]
+    if ans >= target: return ans # 比最小的和还小
     while i < n_len - 1:
         if target == ans: break
         start = i + 1
