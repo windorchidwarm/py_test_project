@@ -27,7 +27,17 @@ def upload_file(local_path):
     return remote_data['Remote file_id']
 
 
+def delete_file(remote_path):
+    data = client.delete_file(remote_path)
+    return data
+
+
 if __name__ == '__main__':
     local = r'C:\Users\BBD\Desktop\test\tmp\tt.csv'
     remote = b'group1/M00/03/3A/ChQUAV6QAsOAFLAyAAA3qyMf10Y193.csv'
-    down_load_file(remote, local)
+    # down_load_file(remote, local)
+    try:
+        print(delete_file(remote))
+    except:
+        print('xxxx')
+    print('xxx')
