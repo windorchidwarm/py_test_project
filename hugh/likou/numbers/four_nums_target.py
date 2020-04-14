@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# -- coding: utf-8 --#
+# @Time : 2020/4/14 10:55 
+# @Author : Aries 
+# @Site :  
+# @File : four_nums_target.py 
+# @Software: PyCharm
+
+def four_nums_target(nums, target):
+    '''
+    给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
+
+    来源：力扣（LeetCode）
+    链接：https://leetcode-cn.com/problems/4sum
+    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    :param nums:
+    :param target:
+    :return:
+    '''
+    n = len(nums)
+    if n < 4:
+        return []
+
+    nums.sort()
+
+    lst = []
+    i = 0
+    while i < n - 3:
+        i_target = target - nums[i]
+        j = i + 1
+        while j < n - 2:
+            if nums[j] > i_target and nums[j] > 0: break
+            first = j + 1
+            last = n - 1
+            while first < last:
+                if first >= last: break
+                result = nums[j] + nums[first] + nums[last]
+                if result == i_target:
+                    lst.append([nums[i], nums[j], nums[first], nums[last]])
+                if result <= i_target:
+                    while first < last and nums[first] == nums[first + 1]:
+                        first += 1
+                    first += 1
+                else:
+                    while first < last and nums[last] == nums[last - 1]:
+                        last -= 1
+                    last -= 1
+            while nums[j] == nums[j + 1] and j < n - 2: j += 1
+            j += 1
+        while nums[i] == nums[i + 1] and i < n - 3: i += 1
+        i += 1
+    return lst
+
+if __name__ == '__main__':
+    nums =  [1,-2,-5,-4,-3,3,3,5]
+    target = -11
+    l = four_nums_target(nums, target)
+    print(l)
