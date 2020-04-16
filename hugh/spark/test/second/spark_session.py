@@ -8,6 +8,8 @@
 from pyspark import SparkContext,SparkConf
 from hugh.spark.test.second import spark_config
 
+from operator import add
+
 
 def get_session():
     conf = SparkConf().setMaster('local').setAppName('first')
@@ -23,3 +25,6 @@ if __name__ == '__main__':
     print(sc)
     test_rdd = sc.textFile(r'C:\Users\yhchen\Desktop\test\tmp\434.txt').cache()
     data = test_rdd.flatMap(lambda value: value.split(' ')).foreach(print)
+
+    num_rdd = sc.parallelize([i for i in range(10)])
+    print(num_rdd.filter(lambda x: x % 2 == 0).reduce(add))
