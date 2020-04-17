@@ -42,5 +42,57 @@ def letter_combinations(digits: str) -> List[str]:
     letter_combi('', 0)
     return l_list
 
+
+def generateParenthesis(n: int) -> List[str]:
+    '''
+    数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+    :param self:
+    :param n:
+    :return:
+    '''
+    if n == 0:
+        return ['']
+    lst = []
+    def generate_per(first, last, par_str, n):
+        print(first, last, par_str, n, lst)
+        if first < n:
+            par_str += '('
+            first += 1
+            generate_per(first, last, par_str, n)
+            par_str = par_str[:-1]
+            first -= 1
+
+        if last < first:
+            par_str += ')'
+            last += 1
+            if last == n:
+               lst.append(par_str)
+            else:
+                generate_per(first, last, par_str, n)
+                par_str = par_str[:-1]
+                last -= 1
+    generate_per(0, 0, '', n)
+    return lst
+
+
+def generateParenthesis2(n: int) -> List[str]:
+    '''
+    数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+    :param self:
+    :param n:
+    :return:
+    '''
+    if n == 0:
+        return ['']
+    ans = []
+    for i in range(n - 1, -1 , -1):
+        for left in generateParenthesis2(i):
+            for right in generateParenthesis2(n - i - 1):
+                ans.append('({}){}'.format(left, right))
+    return ans
+
+
 if __name__  ==  '__main__':
     print(letter_combinations('23'))
+    print(generateParenthesis(3))
+    print(generateParenthesis2(3))
