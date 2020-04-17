@@ -16,6 +16,18 @@ def get_session():
     sc = SparkContext(conf=conf)
     return sc
 
+def wind_some(sc):
+    test_rdd = sc.textFile(r'C:\Users\yhchen\Desktop\test\tmp\434.txt').cache()
+    data = test_rdd.flatMap(lambda value: value.split(' ')).foreach(print)
+
+    num_rdd = sc.parallelize([i for i in range(10)])
+    print(num_rdd.filter(lambda x: x % 2 == 0).reduce(add))
+
+
+def wind_some2(sc):
+    path = r'C:\Users\yhchen\Desktop\test\tmp\434.txt'
+    test_rdd = sc.textFile(path)
+
 
 if __name__ == '__main__':
     '''
@@ -23,8 +35,5 @@ if __name__ == '__main__':
     '''
     sc = get_session()
     print(sc)
-    test_rdd = sc.textFile(r'C:\Users\yhchen\Desktop\test\tmp\434.txt').cache()
-    data = test_rdd.flatMap(lambda value: value.split(' ')).foreach(print)
-
-    num_rdd = sc.parallelize([i for i in range(10)])
-    print(num_rdd.filter(lambda x: x % 2 == 0).reduce(add))
+    wind_some2(sc)
+    # wind_some(sc)
