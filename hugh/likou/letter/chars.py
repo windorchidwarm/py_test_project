@@ -41,6 +41,29 @@ def minDistance2(word1: str, word2: str) -> int:
                 min_distance[i + 1][j + 1] = min(min_distance[i][j], min_distance[i + 1][j], min_distance[i][j + 1]) + 1
     return min_distance[len(word2)][len(word1)]
 
+def reverseWords( s: str) -> str:
+    '''
+    给定一个字符串，逐个翻转字符串中的每个单词。
+    示例 1：
+
+    输入: "the sky is blue"
+    输出: "blue is sky the"
+    :param s:
+    :return:
+    '''
+    s_list = s.split(' ')
+    res = ''
+    print(s_list)
+    for value in s_list:
+        if not value == '':
+            if res:
+                res = value + ' ' + res
+            else:
+                res += value
+    return res
+
+
 if __name__ == '__main__':
     print(minDistance2('horse', 'ros'))
     print(minDistance2('intention', 'execution'))
+    print(reverseWords('a good   example'))
