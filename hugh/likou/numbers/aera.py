@@ -56,6 +56,37 @@ def trap(height: List[int]) -> int:
     return water
 
 
+def trap2(height: List[int]) -> int:
+    '''
+    给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+    输入: [0,1,0,2,1,0,1,3,2,1,2,1]
+    输出: 6
+    我们可以不用像方法 2 那样存储最大高度，而是用栈来跟踪可能储水的最长的条形块。使用栈就可以在一次遍历内完成计算。
+
+    我们在遍历数组时维护一个栈。如果当前的条形块小于或等于栈顶的条形块，我们将条形块的索引入栈，意思是当前的条形块被栈中的前一个条形块界定。如果我们发现一个条形块长于栈顶，我们可以确定栈顶的条形块被当前条形块和栈的前一个条形块界定，因此我们可以弹出栈顶元素并且累加答案到 \text{ans}ans 。
+    :param height:
+    :return:
+    '''
+    if len(height) == 0:
+        return 0
+    water = 0
+    height_lst = []
+    current = 0
+    while current < len(height):
+        while len(height_lst) > 0 and height[current] > height[height_lst[-1]]:
+            top = height_lst[-1]
+            height_lst = height_lst[:-1]
+            if len(height_lst) == 0:
+                break
+            distance = current - height_lst[-1] - 1
+            bound_height = min(height[current], height[height_lst[-1]]) - height[top]
+            water += distance * bound_height
+
+        height_lst.append(current)
+        current += 1
+    return water
+
+
 if __name__ == '__main__':
-    print(trap([0,1,0,2,1,0,1,3,2,1,2,1]))
-    print(trap([0]))
+    print(trap2([0,1,0,2,1,0,1,3,2,1,2,1]))
+    print(trap2([0]))
