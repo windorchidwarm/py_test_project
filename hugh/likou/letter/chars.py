@@ -51,6 +51,8 @@ def reverseWords( s: str) -> str:
     :param s:
     :return:
     '''
+    if s == '' or len(s) == 0:
+        return ''
     s_list = s.split(' ')
     res = ''
     print(s_list)
