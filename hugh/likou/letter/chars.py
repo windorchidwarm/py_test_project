@@ -146,6 +146,13 @@ def numIslands(grid: List[List[str]]) -> int:
     :param grid:
     :return:
     '''
+
+    def dfs(self, grid, r, c):
+        grid[r][c] = 0
+        nr, nc = len(grid), len(grid[0])
+        for x, y in [(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)]:
+            if 0 <= x < nr and 0 <= y < nc and grid[x][y] == "1":
+                self.dfs(grid, x, y)
     if len(grid) == 0 or len(grid[0]) == 0: return 0
     m = len(grid)
     n = len(grid[0])
