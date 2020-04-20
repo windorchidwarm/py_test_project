@@ -5,6 +5,8 @@
 # Date  : 2020-04-18
 
 
+from typing import List
+
 def minDistance(word1: str, word2: str) -> int:
     '''
     给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。
@@ -127,7 +129,81 @@ def getMaxRepetitions(s1: str, n1: int, s2: str, n2: int) -> int:
     return ans // n2
 
 
+def numIslands(grid: List[List[str]]) -> int:
+    '''
+    给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+    岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+    此外，你可以假设该网格的四条边均被水包围。
+
+        输入:
+    11000
+    11000
+    00100
+    00011
+    输出: 3
+    解释: 每座岛屿只能由水平和/或竖直方向上相邻的陆地连接而成。
+    :param self:
+    :param grid:
+    :return:
+    '''
+    if len(grid) == 0 or len(grid[0]) == 0: return 0
+    m = len(grid)
+    n = len(grid[0])
+    grid_new = [['0' for i in range(n)] for j in range(m)]
+
+    cnt = 0
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == '1':
+                if grid_new[i][j] == '0':
+                    cnt += 1
+                    # 设置grid_new 扫描的为1
+                    land_set = set()
+                    land_list = []
+                    land_set.add((i, j))
+                    land_list.append((i, j))
+                    for a,b in land_list:
+                        for c,d in ((a-1, b), (a + 1, b), (a, b - 1), (a, b + 1)):
+                            '''
+                            另外一种解法是将grid置为0
+                            '''
+                            if c >= 0 and c < m and b >=0 and b < n:
+                                if grid[m][n] == '1' and grid_new[m][n] == '0' and (m, n) not in land_set:
+                                    grid_new[m][n] = '1'
+                                    land_list.append((m, n))
+                        # if a - 1 >= 0:
+                        #     if grid[a - 1][b] == '1' and grid_new[a - 1][b] == '0':
+                        #         if (a - 1, b) not in land_set:
+                        #             grid_new[a - 1][b] = '1'
+                        #             land_list.append((a - 1, b))
+                        # if b - 1 >= 0:
+                        #     if grid[a][b - 1] == '1' and grid_new[a][b - 1] == '0':
+                        #         if (a, b - 1) not in land_set:
+                        #             grid_new[a][b - 1] = '1'
+                        #             land_list.append((a, b - 1))
+                        # if a + 1 < m:
+                        #     if grid[a + 1][b] == '1' and grid_new[a + 1][b] == '0':
+                        #         if (a + 1, b) not in land_set:
+                        #             grid_new[a + 1][b] = '1'
+                        #             land_list.append((a + 1, b))
+                        # if b + 1 < n:
+                        #     if grid[a][b + 1] == '1' and grid_new[a][b + 1] == '0':
+                        #         if (a, b + 1) not in land_set:
+                        #             grid_new[a][b + 1] = '1'
+                        #             land_list.append((a, b + 1))
+    return cnt
+
+
+
+
 if __name__ == '__main__':
     print(minDistance2('horse', 'ros'))
     print(minDistance2('intention', 'execution'))
     print(reverseWords('a good   example'))
+    data = '''11000|11000|00100|00011'''.split('|')
+    print(data)
+    data_list = []
+    for val in data:
+        data_list.append(list(val))
+    print(data_list)
+    print(numIslands(data_list))
