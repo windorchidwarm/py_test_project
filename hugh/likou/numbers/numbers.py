@@ -35,4 +35,55 @@ def merge(intervals: List[List[int]]) -> List[List[int]]:
 
     return merged
 
+def numberOfSubarrays(nums: List[int], k: int) -> int:
+    '''
+    给你一个整数数组 nums 和一个整数 k。
+    如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。
+    请返回这个数组中「优美子数组」的数目。
+    输入：nums = [2,2,2,1,2,2,1,2,2,2], k = 2
+    输出：16
+    数学方式
+    :param self:
+    :param nums:
+    :param k:
+    :return:
+    '''
+    if len(nums) < k: return 0
 
+    cnt = 0
+    odd = [-1]
+    for i in range(len(nums)):
+        if nums[i] % 2 == 1:
+            odd.append(i)
+    odd.append(len(nums))
+    if len(odd) < k: return 0
+    for i in range(1, len(odd) - k):
+        cnt += (odd[i] - odd[i - 1]) * (odd[i + k] - odd[i + k - 1])
+    return cnt
+
+def numberOfSubarrays2(nums: List[int], k: int) -> int:
+    '''
+    给你一个整数数组 nums 和一个整数 k。
+    如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。
+    请返回这个数组中「优美子数组」的数目。
+    输入：nums = [2,2,2,1,2,2,1,2,2,2], k = 2
+    输出：16
+    前缀和+差分
+    :param self:
+    :param nums:
+    :param k:
+    :return:
+    '''
+    if len(nums) < k: return 0
+
+    cnt = [0] * (len(nums) + 1)
+    cnt[0] = 1
+    odd, ans = 0, 0
+    for i in range(len(nums)):
+        if nums[i] % 2 == 1:
+            odd += 1
+        if odd >= k:
+            ans += cnt[odd - k]
+        cnt[odd] += 1
+        print(cnt)
+    return ans
