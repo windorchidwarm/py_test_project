@@ -63,6 +63,61 @@ def mergeKLists(lists: List[ListNode]) -> ListNode:
 
 
 
+def swapPairs(head: ListNode) -> ListNode:
+    '''
+    给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+    你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+    :param self:
+    :param head:
+    :return:
+    '''
+    if head is None or head.next is None:
+        return head
+    else:
+        first = head
+        head = head.next
+
+        last = first.next
+        first.next = last.next
+        last.next = first
+        pre = first
+        first = first.next
+
+        while first is not None and first.next is not None:
+            last = first.next
+            first.next = first.next.next
+            last.next = first
+            pre.next = last
+
+            pre = first
+            first = first.next
+        return head
+
+def swapPairs2(head: ListNode) -> ListNode:
+        dummy = ListNode(-1)
+        dummy.next = head
+
+        prev_node = dummy
+
+        while head and head.next:
+
+            # Nodes to be swapped
+            first_node = head;
+            second_node = head.next;
+
+            # Swapping
+            prev_node.next = second_node
+            first_node.next = second_node.next
+            second_node.next = first_node
+
+            # Reinitializing the head and prev_node for next swap
+            prev_node = first_node
+            head = first_node.next
+
+        # Return the new head node.
+        return dummy.next
+
+
 if __name__ == '__main__':
     '''
     几点操作
