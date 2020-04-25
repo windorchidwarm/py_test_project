@@ -62,6 +62,89 @@ def mergeKLists(lists: List[ListNode]) -> ListNode:
     return head.next
 
 
+def reverseKGroup(head: ListNode, k: int) -> ListNode:
+    '''
+    给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。
+    k 是一个正整数，它的值小于或等于链表的长度。
+    如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
+    示例：
+    给你这个链表：1->2->3->4->5
+    当 k = 2 时，应当返回: 2->1->4->3->5
+    当 k = 3 时，应当返回: 3->2->1->4->5
+    :param head:
+    :param k:
+    :return:
+    '''
+    if not head or not head.next:
+        return head
+    else:
+        tmp_node = head
+        node_list = []
+        i = 0
+        while i < k and tmp_node:
+            node_list.append(tmp_node)
+            tmp_node = tmp_node.next
+            i += 1
+        head_node =node_list[-1]
+        head_tmp = node_list[-1]
+        m = len(node_list)
+        for j in range(2, m + 1):
+            head_tmp.next = node_list[-j]
+            head_tmp = head_tmp.next
+        pre_head = head_tmp
+
+        while tmp_node:
+            i = 0
+            node_list.clear()
+            while i < k and tmp_node:
+                node_list.append(tmp_node)
+                tmp_node = tmp_node.next
+                i += 1
+            m = len(node_list)
+            if m == k:
+                head_tmp = node_list[-1]
+                pre_head.next = head_tmp
+
+                for j in range(2, m + 1):
+                    head_tmp.next = node_list[-j]
+                    head_tmp = head_tmp.next
+                head_tmp.next = tmp_node
+                pre_head = head_tmp
+            else:
+                pre_head.next = node_list[0]
+        return head_node
+
+
+def reverseKGroup(head: ListNode, k: int) -> ListNode:
+    def reverse(head_node):
+        pre = None
+        cur = head_node
+        while cur:
+            next_node = cur.next
+            cur.next = pre
+            pre = cur
+            cur = next_node
+        return pre
+
+    dummy = ListNode(0)
+    dummy.next = head
+    pre = dummy
+    end = dummy
+    while end:
+        i = 0
+        while i < k and end:
+            end = end.next
+            i += 1
+        if not end: break
+        start = pre.next
+        next_node = end.next
+        end.next = None
+        pre.next = reverse(start)
+        start.next = next_node
+        pre = start
+        end = pre
+
+    return dummy.next
 
 def swapPairs(head: ListNode) -> ListNode:
     '''
