@@ -86,7 +86,17 @@ def trap2(height: List[int]) -> int:
         current += 1
     return water
 
+def corpFlightBookings(bookings: List[List[int]], n: int) -> List[int]:
+    res = [0] * (n + 1)
+    for i, j, k in bookings:
+        res[i - 1] += k
+        res[j] -= k
+        print(res)
+    for i in range(1, len(res)):
+        res[i] += res[i - 1]
+    return res[:-1]
 
 if __name__ == '__main__':
     print(trap2([0,1,0,2,1,0,1,3,2,1,2,1]))
     print(trap2([0]))
+    print(corpFlightBookings([[1,2,10],[2,3,20],[2,5,25]], 5))
