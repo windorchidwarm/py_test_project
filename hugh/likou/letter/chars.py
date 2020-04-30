@@ -202,15 +202,30 @@ def numIslands(grid: List[List[str]]) -> int:
 
 
 
+def jiu_gong(data:str):
+    '''
+
+    :return:
+    '''
+    phone_nums =["0 ","1,.?!","2ABC","3DEF","4GHI","5JKL","6MNO","7PQRS","8TUV","9WXYZ"]
+    data_list = data.split(' ')
+    res = ''
+    for val in data_list:
+        num_str = int(val[0])
+        res += phone_nums[num_str][len(val) - 1]
+    return res
+
+
 
 if __name__ == '__main__':
-    print(minDistance2('horse', 'ros'))
-    print(minDistance2('intention', 'execution'))
-    print(reverseWords('a good   example'))
-    data = '''11000|11000|00100|00011'''.split('|')
-    print(data)
-    data_list = []
-    for val in data:
-        data_list.append(list(val))
-    print(data_list)
-    print(numIslands(data_list))
+    # print(minDistance2('horse', 'ros'))
+    # print(minDistance2('intention', 'execution'))
+    # print(reverseWords('a good   example'))
+    # data = '''11000|11000|00100|00011'''.split('|')
+    # print(data)
+    # data_list = []
+    # for val in data:
+    #     data_list.append(list(val))
+    # print(data_list)
+    # print(numIslands(data_list))
+    print(jiu_gong('22 5555 22 666 00 88 888 7777 4444 666 44'))
