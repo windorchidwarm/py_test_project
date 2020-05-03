@@ -87,3 +87,76 @@ def numberOfSubarrays2(nums: List[int], k: int) -> int:
         cnt[odd] += 1
         print(cnt)
     return ans
+
+def maxSubArray(nums: List[int]) -> int:
+    '''
+    给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+    示例:
+    输入: [-2,1,-3,4,-1,2,1,-5,4],
+    输出: 6
+    解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。\
+    动态规划
+    :param self:
+    :param nums:
+    :return:
+    '''
+    if not nums or len(nums) < 1: return 0
+
+    dp = [0] * len(nums)
+    dp[0] = nums[0]
+    result = dp[0]
+    for i in range(1, len(nums)):
+        dp[i] = max(dp[i - 1] + nums[i], nums[i])
+        result = max(result, dp[i])
+    return result
+
+def maxSubArray2(nums: List[int]) -> int:
+    '''
+    给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+    示例:
+    输入: [-2,1,-3,4,-1,2,1,-5,4],
+    输出: 6
+    解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。\
+    贪心算法
+    :param self:
+    :param nums:
+    :return:
+    '''
+    if not nums or len(nums) < 1: return 0
+
+    result = nums[0]
+    sum = 0
+    for i in range(0, len(nums)):
+        sum += nums[i]
+        result = max(result, sum)
+        if sum < 0: sum = 0
+    return result
+
+
+def maxSubArray3(nums: List[int]) -> int:
+    '''
+    给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+    示例:
+    输入: [-2,1,-3,4,-1,2,1,-5,4],
+    输出: 6
+    解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。\
+    分治算法
+    :param self:
+    :param nums:
+    :return:
+    '''
+    def get(nums, l, r):
+        if l == r: return nums[l],nums[l],nums[l],nums[l]
+
+        mid = int((l + r) / 2)
+        l_sum_l, r_sum_l, m_sum_l, i_sum_l = get(nums, l, mid)
+        l_sum_r, r_sum_r, m_sum_r, i_sum_r = get(nums, mid + 1, r)
+        return max(l_sum_l, i_sum_l + l_sum_r),max(r_sum_r, i_sum_r + r_sum_l),max(m_sum_l, m_sum_r, r_sum_l + l_sum_r),(i_sum_l + i_sum_r)
+    if not nums or len(nums) < 1: return 0
+
+    l_sum, r_sum, m_sum, i_sum = get(nums, 0, len(nums) - 1)
+    return m_sum
+
+
+if __name__ == '__main__':
+    print(maxSubArray3([-2,1,-3,4,-1,2,1,-5,4]))
