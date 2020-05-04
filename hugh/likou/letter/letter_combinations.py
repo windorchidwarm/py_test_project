@@ -5,6 +5,7 @@
 # Date  : 2020-04-13
 
 from typing import List
+import math
 
 def letter_combinations(digits: str) -> List[str]:
     '''
@@ -90,6 +91,31 @@ def generateParenthesis2(n: int) -> List[str]:
             for right in generateParenthesis2(n - i - 1):
                 ans.append('({}){}'.format(left, right))
     return ans
+
+
+def longestValidParentheses(s: str) -> int:
+    '''
+    给定一个只包含 '(' 和 ')' 的字符串，找出最长的包含有效括号的子串的长度。
+    示例 1:
+    输入: "(()"
+    输出: 2
+    解释: 最长有效括号子串为 "()"
+    :param s:
+    :return:
+    '''
+    maxans = 0
+    dp = [0] * len(s)
+
+    for i in range(len(s)):
+        if s[i] == ')':
+            if i - 1 >= 0 and s[i - 1] == '(':
+                dp[i] = dp[i - 2] + 2 if i >= 2  else 2
+            elif i - 1 >=0 and i - dp[i - 1] > 0 and s[i - dp[i-1] - 1] == '(':
+                dp[i] = dp[i - dp[i - 1] - 2] + 2 if (dp[i - 1] + ((i - dp[i - 1]))) >= 2  else 2
+            maxans = max(maxans, dp[i])
+    return maxans
+
+
 
 
 if __name__  ==  '__main__':
