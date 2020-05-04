@@ -107,11 +107,17 @@ def longestValidParentheses(s: str) -> int:
     dp = [0] * len(s)
 
     for i in range(len(s)):
+        print(dp)
         if s[i] == ')':
+            print(i, i - dp[i-1] - 1)
             if i - 1 >= 0 and s[i - 1] == '(':
                 dp[i] = dp[i - 2] + 2 if i >= 2  else 2
             elif i - 1 >=0 and i - dp[i - 1] > 0 and s[i - dp[i-1] - 1] == '(':
-                dp[i] = dp[i - dp[i - 1] - 2] + 2 if (dp[i - 1] + ((i - dp[i - 1]))) >= 2  else 2
+                print(s[i - dp[i-1] - 1], i - dp[i - 1])
+                if i - dp[i - 1] >= 2:
+                    dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] - 2]
+                else:
+                    dp[i] = dp[i - 1] + 2
             maxans = max(maxans, dp[i])
     return maxans
 
@@ -122,3 +128,4 @@ if __name__  ==  '__main__':
     print(letter_combinations('23'))
     print(generateParenthesis(3))
     print(generateParenthesis2(3))
+    print(longestValidParentheses('()(())'))
