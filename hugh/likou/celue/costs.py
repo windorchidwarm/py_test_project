@@ -5,6 +5,7 @@
 # Date  : 2020/5/6
 
 from typing import List
+from functools import lru_cache
 
 def mincostTickets(days: List[int], costs: List[int]) -> int:
     '''
@@ -44,7 +45,37 @@ def mincostTickets(days: List[int], costs: List[int]) -> int:
     print(dp)
     return dp[-1]
 
+
+def mincostTickets2(days: List[int], costs: List[int]) -> int:
+    '''
+    从后往前推
+    :param days:
+    :param costs:
+    :return:
+    '''
+    if not days: return 0
+    dayset = set(days)
+    N = days[-1] + 1
+
+    durations = [1, 7, 30]
+    @lru_cache(None)
+    def dp(i):
+        if i >= N: return 0
+        if i in dayset:
+            return min(dp(i + d) + c for c, d in zip(costs, durations))
+            # ans = 10 ** 9
+            # for c, d in zip(costs, durations):
+            #     j = i
+            #     while j < N and j < i + d:
+            #         j += 1
+            #     ans = min(ans, dp(j) + c)
+            # return ans
+        else:
+            return dp(i + 1)
+    return dp(0)
+
+
 if __name__ == '__main__':
-    print(mincostTickets([1,4,6,7,8,20], [2,7,15]))
+    print(mincostTickets2([1,4,6,7,8,20], [2,7,15]))
 
 
