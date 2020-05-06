@@ -22,9 +22,12 @@ def mincostTickets(days: List[int], costs: List[int]) -> int:
     '''
     if not days: return 0
     dp = [0] * (days[-1] + 1)
+
+    dayset = set(days)
     for i in range(1, len(dp)):
         # dayset = set(days) 似乎可以加速查询效率
-        if i in days:
+        # if i in days:
+        if i in dayset:
             i_cost = costs[0] + dp[i - 1]
             if i >= 7:
                 i_cost = min(i_cost, dp[i - 7] + costs[1])
