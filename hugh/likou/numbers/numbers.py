@@ -158,5 +158,49 @@ def maxSubArray3(nums: List[int]) -> int:
     return m_sum
 
 
+def add_two_nums(nums1:List[int], nums2:List[int]) -> List[int]:
+    '''
+
+    :param nums1:
+    :param nums2:
+    :return:
+    '''
+    def get_a_sign(a):
+        if a > 9:
+            return a % 10, 1
+        else:
+            return a, 0
+    if not nums1: return nums2
+    if not nums2: return nums1
+
+    i = 1
+    sign = 0
+    lst = []
+    while i <= len(nums1) and i <= len(nums2):
+        a = sign + nums1[-i] + nums2[-i]
+        a, sign = get_a_sign(a)
+        lst.append(a)
+        i += 1
+    while i <= len(nums1):
+        a = sign + nums1[-i]
+        a, sign = get_a_sign(a)
+        lst.append(a)
+        i += 1
+    while i <= len(nums2):
+        a = sign + nums2[-i]
+        a, sign = get_a_sign(a)
+        lst.append(a)
+        i += 1
+
+    if sign == 1:
+        lst.append(1)
+    lst.reverse()
+    return lst
+
+
+
+
+
+
 if __name__ == '__main__':
     print(maxSubArray3([-2,1,-3,4,-1,2,1,-5,4]))
