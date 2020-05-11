@@ -197,8 +197,36 @@ def add_two_nums(nums1:List[int], nums2:List[int]) -> List[int]:
     lst.reverse()
     return lst
 
+def myPow(x: float, n: int) -> float:
+    def quick_muk_N(N):
+        if N == 0: return 1.0
+        y = quick_muk_N(N // 2)
+        return y * y if N % 2 == 0 else y * y * x
 
+    if x == 0: return 0
+    return quick_muk_N(n) if n > 0 else 1.0 / quick_muk_N(-n)
 
+def myPow2(x: float, n: int) -> float:
+    '''
+    时间复杂度：O(\log n)O(logn)，即为对 nn 进行二进制拆分的时间复杂度。
+    :param x:
+    :param n:
+    :return:
+    '''
+    def quick_muk_N(N):
+
+        ans = 1.0
+        x_contribute  = x
+        while N > 0:
+            if N % 2 == 1:
+                ans *= x_contribute
+            x_contribute *= x_contribute
+            # 舍弃 N 二进制表示的最低位，这样我们每次只要判断最低位即可
+            N //= 2
+        return ans
+
+    if x == 0: return 0
+    return quick_muk_N(n) if n > 0 else 1.0 / quick_muk_N(-n)
 
 
 
