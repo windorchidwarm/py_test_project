@@ -10,7 +10,7 @@ class HbaseUtils:
         flush '{data_table}'
         disable '{data_table}'
         drop '{data_table}'
-        create '{data_table}',{{ NAME => '{fm}', COMPRESSION => 'snappy' }}, {{NUMREGIONS => {}, SPLITALGO => 'HexStringSplit'}}
+        create '{data_table}',{{ NAME => '{fm}', COMPRESSION => 'snappy' }}, {{NUMREGIONS => {reg_num}, SPLITALGO => 'HexStringSplit'}}
         exit
         '''
     hbase_meta_commond = '''
