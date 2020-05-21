@@ -12,6 +12,8 @@ from sklearn import svm
 import numpy as np
 from scipy import stats
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+import pickle
+import os
 
 
 def svc_test(df, label):
@@ -48,6 +50,18 @@ def svc_test(df, label):
     param_search.fit(X.values, y.values)
     print(param_search.best_estimator_)
     print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+    pickle_file = r'C:\Users\BBD\Desktop\test\test\test.pkl'
+
+    # if not os.path.isfile(pickle_file):
+    #     os.mknod(pickle_file)
+    f = open(pickle_file, 'wb')
+    pickle.dump(param_search, f)
+    f.close()
+
+    f1 = open(pickle_file, 'rb')
+    test_param_search = pickle.load(f1)
+    print(test_param_search.predict(X.values))
 
 
 def test_svm_svr(df, label):
@@ -137,5 +151,5 @@ if __name__ == '__main__':
     updf = updf.append(updf, ignore_index=True, sort=False)
     print(updf)
 
-    # svc_test(updf, label)
-    test_svm_svr(updf, label)
+    svc_test(updf, label)
+    # test_svm_svr(updf, label)
