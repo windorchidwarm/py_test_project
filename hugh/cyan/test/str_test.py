@@ -7,7 +7,9 @@
 # @Software: PyCharm
 
 import re
-import datetime
+import datetime, time
+
+from typing import List
 
 if __name__ == '__main__':
     '''
@@ -20,6 +22,39 @@ if __name__ == '__main__':
 
     exp = re.compile('[^\u4e00-\u9fa5]+')
     print(exp.fullmatch(data))
+    now_time = datetime.datetime.now()
+    print(now_time.strftime('%Y%m%d'))
+
+    data_str = '20200418'
+    data = time.strptime(data_str, '%Y%m%d')
+    print(data)
+    print(time.mktime(data))
+    date = datetime.datetime.fromtimestamp(time.mktime(data))
+    print(date.date())
+    # print(datetime.datetime())
+    print(time.strftime('%Y-%m-%d %H:%M:%S', data))
+    delta = datetime.timedelta(days=7)
+    data = datetime.date(data.tm_year, data.tm_mon, data.tm_mday)
+    data = data - delta
+    print(data)
+    print(data.strftime('%Y-%m-%d %H:%M:%S'))
+
+    print('------------------')
+    data = ['']
+    print(len(data))
+    print(data[0])
+    i = None
+    print(i != '')
+    lst = [1, 2]
+    print(lst.reverse())
+
+
+    data = {'dd':'dd', 'xx':'xx'}
+    print(data)
+    data.pop('dd')
+    print(data)
+
+
 
     lst = []
     lst.append(3)
