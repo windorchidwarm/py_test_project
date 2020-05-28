@@ -95,7 +95,7 @@ class MysqlUtils:
         if subprocess.call(dump_query, shell=True) != 0:
             print("数据导出错误： {table}".format(table=table))
 
-    def sqoop_export(self, table, data_path, dt=None):
+    def sqoop_export(self, table, data_path, dt=None, mapper=4):
         '''
         用sqoop命令行的方式连接数据库，把数据从集群hdfs上批量导出到数据库
         :param self: 数据库连接配置
@@ -120,7 +120,7 @@ class MysqlUtils:
             port=self.port,
             db_name=self.db_name,
             user=self.user,
-            mapper=self.mapper,
+            mapper=mapper,
             password=self.password,
             table_name=table,
             absolute_path=data_path
