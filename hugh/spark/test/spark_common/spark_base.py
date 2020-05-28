@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from spark_common.utils_json import JsonUtils
-from spark_common.utils_spark import SparkUtils
-from spark_common.gen_id import GenId
+from hugh.spark.test.spark_common.utils_json import JsonUtils
+from hugh.spark.test.spark_common.utils_spark import SparkUtils
+from hugh.spark.test.spark_common.gen_id import GenId
 
 """
 脚本基础类
