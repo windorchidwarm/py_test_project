@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import datetime
+import datetime, time
 
 """
 qyxx_basic表相关通用函数
@@ -15,7 +15,8 @@ def year_level(esdate, opento):
     """
     to_date = datetime.date.today()
     try:
-        opento1 = datetime.date.strptime(opento, "%Y-%m-%d")
+        # datatime.date 没有 strptime方法
+        opento1 = datetime.datetime.strptime(opento, "%Y-%m-%d").date()
         if opento1 < to_date:
             to_date = opento1
     except:
