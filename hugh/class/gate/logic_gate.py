@@ -29,10 +29,24 @@ class BinaryGate(LogicGate):
         self.pinB = None
 
     def getPinA(self):
-        return int(input('pin a is '))
+        if self.pinA is None:
+            return int(input('pin a is '))
+        else:
+            return self.pinA.getFrom().getOutput()
 
     def getPinB(self):
-        return int(input('pin b is '))
+        if self.pinB is None:
+            return int(input('pin a is '))
+        else:
+            return self.pinB.getFrom().getOutput()
+
+    def setNextPin(self, source):
+        if self.pinA is None:
+            self.pinA = source
+        elif self.pinB is None:
+            self.pinB = source
+        else:
+            raise Exception(' error ')
 
 class UnaryGate(LogicGate):
 
@@ -41,7 +55,16 @@ class UnaryGate(LogicGate):
         self.pin = None
 
     def getPin(self):
-        return int(input('pin is '))
+        if self.pin is None:
+            return int(input('pin is '))
+        else:
+            return self.pin.getFrom().getOutput()
+
+    def setNextPin(self, source):
+        if self.pin is None:
+            self.pin = source
+        else:
+            raise Exception(' error ')
 
 class AndGate(BinaryGate):
     def __init__(self, n):
@@ -76,6 +99,20 @@ class NotGate(UnaryGate):
             return 0
         else:
             return 1
+
+class Connector:
+    def __init__(self, fgate, tgate):
+        self.fromgate = fgate
+        self.togate = tgate
+        tgate.setNextPin(self)
+
+    def getFrom(self):
+        return self.fromgate
+
+    def getTo(self):
+        return self.togate
+
+
 if __name__ == '__main__':
     '''
     '''
