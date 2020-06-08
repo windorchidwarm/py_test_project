@@ -229,6 +229,46 @@ def myPow2(x: float, n: int) -> float:
     return quick_muk_N(n) if n > 0 else 1.0 / quick_muk_N(-n)
 
 
+def productExceptSelf(nums: List[int]) -> List[int]:
+    '''
+    给你一个长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，
+    其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+    输入: [1,2,3,4]
+    输出: [24,12,8,6]
+    :param nums:
+    :return:
+    '''
+    answer = [1] * len(nums)
+
+    for i in range(1, len(nums)):
+        answer[i] = nums[i - 1] * answer[i - 1]
+
+    R = 1
+    for i in range(len(nums) - 2, -1, -1):
+        R *= nums[i + 1]
+        answer[i] *= R
+    return answer
+
+def productExceptSelf2(nums: List[int]) -> List[int]:
+    '''
+    给你一个长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，
+    其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+    输入: [1,2,3,4]
+    输出: [24,12,8,6]
+    :param nums:
+    :return:
+    '''
+    num_len = len(nums)
+    l,r,answer = [1] * num_len, [1] * num_len, [1] * num_len
+
+    for i in range(1, num_len):
+        l[i] = nums[i - 1] * l[i - 1]
+        r[num_len - i - 1] = nums[num_len - i] * r[num_len - i]
+
+    for i in range(0, num_len):
+        answer[i] = r[i] * l[i]
+    return answer
+
 
 if __name__ == '__main__':
     print(maxSubArray3([-2,1,-3,4,-1,2,1,-5,4]))
