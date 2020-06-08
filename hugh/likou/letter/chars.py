@@ -216,6 +216,28 @@ def jiu_gong(data:str):
     return res
 
 
+def anagramSolution4(s1, s2):
+    '''
+    s1和s2是否是易序数列，如果是则返回true
+    即s1和s2中组合的字符个数和数量是否相同
+    :param s1:
+    :param s2:
+    :return:
+    '''
+    if len(s1) != len(s2): return False
+    c = [0] * 26
+    for i in range(len(s1)):
+        pos = ord(s1[i]) - ord('a')
+        c[pos] += 1
+        pos = ord(s2[i]) - ord('a')
+        c[pos] -= 1
+
+    for j in c:
+        if j != 0:
+            return False
+    return True
+
+
 
 if __name__ == '__main__':
     # print(minDistance2('horse', 'ros'))
