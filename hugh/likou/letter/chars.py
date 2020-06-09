@@ -238,6 +238,37 @@ def anagramSolution4(s1, s2):
     return True
 
 
+def translateNum(num: int) -> int:
+    '''
+    给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，
+    11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
+    请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+    输入: 12258
+    输出: 5
+    解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+    :param num:
+    :return:
+    '''
+    num_str = str(num)
+    x,y = 1, 1
+    for i in range(1, len(num_str)):
+        if num_str[i - 1] != '0' and int(num_str[i - 1] + num_str[i]) <= 25:
+            x, y = x + y, x
+        else:
+            y = x
+    print(x)
+    return x
+
+def translateNum2(num: int) -> int:
+    num_str = str(num)
+    ans = [0] * len(num_str)
+    ans[0] = 1
+    for i in range(1, len(num_str)):
+        ans[i] = ans[i - 1]
+        if num_str[i - 1] != '0' and int(num_str[i - 1] + num_str[i]) <= 25:
+            ans[i] += ans[i - 2] if i > 1 else 1
+    return ans[-1]
+
 
 if __name__ == '__main__':
     # print(minDistance2('horse', 'ros'))
@@ -250,4 +281,5 @@ if __name__ == '__main__':
     #     data_list.append(list(val))
     # print(data_list)
     # print(numIslands(data_list))
-    print(jiu_gong('22 5555 22 666 00 88 888 7777 4444 666 44'))
+    # print(jiu_gong('22 5555 22 666 00 88 888 7777 4444 666 44'))
+    translateNum(12256)
