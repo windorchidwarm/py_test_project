@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : hbase_shell.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/5/11
 
 

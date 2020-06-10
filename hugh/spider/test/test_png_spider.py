@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : test_png_spider.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/5/27
 
 from urllib import request

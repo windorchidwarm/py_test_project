@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : test_wang_png.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/5/27
 
 import requests

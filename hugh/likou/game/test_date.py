@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : test_date.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/6/3
 
 import datetime, time

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : prime_test.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/5/29
 
 

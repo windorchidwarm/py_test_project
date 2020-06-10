@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # File  : logic_gate.py
-# Author: BBD
+# Author: hugh
 # Date  : 2020/6/4
 
 
