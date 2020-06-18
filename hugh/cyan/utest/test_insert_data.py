@@ -16,13 +16,21 @@ import json
 
 # 获取数据库连接的session
 def get_session():
-    engienCmd = 'mysql+pymysql://{username}:{password}@{url}'.format(username='tetris',
-                                                                     password='tetris123',
-                                                                     url='10.200.101.196:3306/bbd_tetris_edu')
+    engienCmd = 'mysql+pymysql://{username}:{password}@{url}'.format(username='canghai',
+                                                                     password='PfBC7RdJ',
+                                                                     url='10.28.109.230:3307')
     engine = sqlalchemy.create_engine(engienCmd, connect_args={'charset': 'utf8'})
     session_factory = sessionmaker(bind=engine)
     session = session_factory()
     return session
+
+
+def get_engine():
+    engienCmd = 'mysql+pymysql://{username}:{password}@{url}'.format(username='canghai',
+                                                                     password='PfBC7RdJ',
+                                                                     url='10.28.109.230:3307')
+    engine = sqlalchemy.create_engine(engienCmd, connect_args={'charset': 'utf8'})
+    return engine
 
 # list转字典 根据列名
 def to_dict(data, columns):
@@ -60,26 +68,13 @@ if __name__ == '__main__':
     # 这里定义你要插入的数据条数
     data_nums = 200
 
-    # 这里获取部门的id
-    sql_tenant_id = '''select tenant_id from {table_name}'''.format(table_name='xxxx')
-    my_column = ['tenant_id']
-    session = get_session()
+    df = pd.read_csv(r'C:\Users\BBD\Desktop\test\tmp\2.csv')
+    engine = get_engine()
+    sql = 'select * from `canghai_ai`.`gxyh_edge` a limit 10'
+    dd = pd.read_sql_query(sql, engine)
+    print(dd)
 
-    result_proxy = session.execute(sqlalchemy.text(sql_tenant_id))
-    result_all = result_proxy.fetchall()
+    df.to_sql(name='test', schema='canghai_ai', con=engine, if_exists="replace")
 
-    # 数据的初始化地址，自己记得修改 还有记得去修改映射的表名和字段名
-    id = 0
-    acount = 0
-    # 循环部门的id
-    for i in range(len(result_all)):
-        tenant_id = result_all[i][0]
-        # 循环部门的条数
-        for num in range(data_nums):
-            id = id + 1
-            acount = acount + 1
-            member_table_data = member_table(id=id, tenant_id=tenant_id, acount='test' + str(acount))
-            session.add(member_table_data)
-            session.commit()
 
 
