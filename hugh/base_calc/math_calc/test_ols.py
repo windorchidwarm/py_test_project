@@ -10,6 +10,9 @@ from numpy import mat # 二维矩阵
 
 if __name__ == '__main__':
     '''
+    Y = X a
+    X.T X a = X.T Y
+    a = (X.T X ) ^ -1 X.T Y
     '''
     X = mat([1, 2, 3]).reshape(3, 1)
     Y = mat([5, 10, 15]).reshape(3, 1)
