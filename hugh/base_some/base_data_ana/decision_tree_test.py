@@ -13,18 +13,14 @@ from sklearn.model_selection import train_test_split,cross_val_score
 from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction import DictVectorizer
 import sys, os
-import graphviz
+from hugh.base_some.base_utils.graphviz_utils import export_graph_tree
 
 base_path = os.path.dirname(os.path.realpath(__file__))\
     .replace(os.path.join('hugh', os.path.join('base_some', 'base_data_ana')), '')
 print(base_path)
 
 
-def export_graph(clf):
-    dot_data = tree.export_graphviz(clf, out_file=None)
-    os.environ["PATH"] += os.pathsep + r'E:\software\graphviz\bin'
-    graph = graphviz.Source(dot_data)
-    graph.view()
+
 
 def test_titannic():
     file_base = os.path.join(os.path.join(base_path, 'files'), 'data')
@@ -72,7 +68,7 @@ def test_titannic():
     # 使用K折交叉验证 统计决策树准确率
     print(u'cross_val_score准确率为 %.4lf' % np.mean(cross_val_score(clf, train_features, train_labels, cv=10)))
 
-    export_graph(clf)
+    export_graph_tree(clf)
 
 
 def test_cart_dtc():
@@ -101,7 +97,7 @@ def test_cart_dtc():
     test_pre = clf.predict(test_feature)
     score = accuracy_score(test_label, test_pre)
     print(score)
-    export_graph(clf)
+    export_graph_tree(clf)
 
 
 def test_id3_1():
@@ -110,7 +106,7 @@ def test_id3_1():
     target = np.array([1,1,0,0])
     clf = tree.DecisionTreeClassifier()
     clf = clf.fit(data, target)
-    export_graph(clf)
+    export_graph_tree(clf)
 
 
 def test_id3():
