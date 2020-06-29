@@ -11,6 +11,7 @@
 '''
 
 from typing import List
+import sys
 
 def merge(intervals: List[List[int]]) -> List[List[int]]:
     '''
@@ -269,6 +270,20 @@ def productExceptSelf2(nums: List[int]) -> List[int]:
         answer[i] = r[i] * l[i]
     return answer
 
-
+def maxProduct(nums: List[int]) -> int:
+    if len(nums) == 1:
+        return nums[0]
+    n_min, n_max, ans = None, None, None
+    for i in range(len(nums)):
+        if i == 0:
+            n_min, n_max, ans = nums[i], nums[i], nums[i]
+        else:
+            mn = n_min
+            ma = n_max
+            n_max = max(nums[i], mn * nums[i], ma * nums[i])
+            n_min = min(nums[i], mn * nums[i], ma * nums[i])
+            ans = max(ans, n_max)
+    return ans
 if __name__ == '__main__':
-    print(maxSubArray3([-2,1,-3,4,-1,2,1,-5,4]))
+    # print(maxSubArray3([-2,1,-3,4,-1,2,1,-5,4]))
+    print(maxProduct([-2]))
