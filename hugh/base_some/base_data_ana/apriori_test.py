@@ -6,6 +6,121 @@
 
 
 import efficient_apriori
+import fptools
+
+import os
+
+from lxml import etree
+from selenium import webdriver
+import time
+import csv
+
+
+base_path = os.path.dirname(os.path.realpath(__file__))\
+    .replace(os.path.join('hugh', os.path.join('base_some', 'base_data_ana')), '')
+print(base_path)
+file_dir = os.path.join(base_path, 'apriori')
+
+
+
+def download(request_url, director, flags, csv_write):
+    '''
+
+    :param request_url:
+    :return:
+    '''
+    driver = webdriver.Chrome()
+    driver.get(request_url)
+    time.sleep(1)
+
+    html = driver.find_element_by_xpath('//*').get_attribute('outerHTML')
+    html = etree.HTML(html)
+    # 设置电影名称，导演演员的 xpath
+    movie_lists = html.xpath("/html/body/div[@id='wrapper']/div[@id='root']/div[1]//div[@class='item-root']/div[@class='detail']/div[@class='title']/a[@class='title-text']")
+    name_lists = html.xpath("/html/body/div[@id='wrapper']/div[@id='root']/div[1]//div[@class='item-root']/div[@class='detail']/div[@class='meta abstract_2']")
+
+    # 获取返回数据个数
+    num = len(movie_lists)
+    if num > 15: # 第一页16条数据
+        # 默认第一条部署 所以需要去掉
+        movie_lists = movie_lists[1:]
+        name_lists = name_lists[1:]
+
+    for (movie, name_list) in zip(movie_lists, name_lists):
+        # 可能会 存在为空的情况下
+        if name_list.text is None:
+            continue
+        # 显示演员名称
+        print(name_list.text)
+        names = name_list.text.split('/')
+        # 判断导演是否为指定的director
+        if names[0].strip() == director and movie.text not in flags:
+            # 将第一个字段设置为电影名称
+            names[0] = movie.text
+            flags.append(movie.text)
+            csv_write.writerow(names)
+    print('OK')
+    # 代表这页数据下载成功
+    print(num)
+    if num >= 14:
+        #有可能一页会有14个电影
+        # 继续下一页
+        return True
+    else:
+        # 没有下一页
+        return False
+
+
+
+def test_apriori_main_data(director, file_name):
+    '''
+
+    :return:
+    '''
+    # director = '宁浩'
+    # file_name = os.path.join(file_dir, director + '.csv')
+    base_url = 'https://movie.douban.com/subject_search?search_text='+director+'&cat=1002&start='
+    out = open(file_name, 'w', newline='', encoding='utf-8-sig')
+    csv_wirte = csv.writer(out, dialect='excel')
+    flags = []
+
+    start = 0
+    while start < 10000:
+        request_url = base_url + str(start)
+        flag = download(request_url, director, flags, csv_wirte)
+        if flag:
+            start = start + 15
+        else:
+            break
+    out.close()
+    print('finished')
+
+
+def test_apriori_main():
+    '''
+    一般来说最小支持度常见的取值有0.5，0.1, 0.05。最小置信度常见的取值有1.0, 0.9, 0.8。
+    可以通过尝试一些取值，然后观察关联结果的方式来调整最小值尺度和最小置信度的取值。
+    :return:
+    '''
+    director = '宁浩'
+    file_name = os.path.join(file_dir, director + '.csv')
+    test_apriori_main_data(director, file_name)
+
+    lists = csv.reader(open(file_name, 'r', encoding='utf-8-sig'))
+    data = []
+    for names in lists:
+        name_new = []
+        for name in names:
+            # 去掉演员数据中的空格
+            name_new.append(name.strip())
+        data.append(name_new[1:])
+    itemsets, rules = efficient_apriori.apriori(data, min_support=0.5, min_confidence=1)
+    print(itemsets)
+    print(rules)
+
+
+
+
 
 def test_apriori():
     '''
@@ -18,6 +133,10 @@ def test_apriori():
     itemsets, rules = efficient_apriori.apriori(data, min_support=0.5, min_confidence=1)
     print(itemsets)
     print(rules)
+    print(dir(fptools))
+
+    fptools.FPTree()
+    fptools.fpgrowth()
 
 if __name__ == '__main__':
     '''
