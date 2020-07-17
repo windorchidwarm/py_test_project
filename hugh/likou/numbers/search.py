@@ -47,6 +47,39 @@ def search(nums: List[int], target: int) -> int:
         print(r, l, mid)
     return -1
 
+def searchInsert(nums: List[int], target: int) -> int:
+    if len(nums) == 0:
+        nums.append(target)
+        return 0
+
+    if target < nums[0]:
+        nums.insert(0, target)
+        return 0
+
+    if target > nums[-1]:
+        nums.append(target)
+        return len(nums) - 1
+
+    if target == nums[0]:
+        return 0
+
+    if target == nums[-1]:
+        return len(nums) - 1
+
+    l, r = 0, len(nums) - 1
+
+    while l + 1 < r:
+        mid = (l + r) // 2
+        if nums[mid] == target:
+            return mid
+        elif target > nums[mid]:
+            l = mid
+        else:
+            r = mid
+
+    nums.insert(l + 1, target)
+    return l + 1
 
 if __name__ == '__main__':
-    print(search([3,1], 1))
+    # print(search([3,1], 1))
+    print(searchInsert([1,3,5,6], 7))
