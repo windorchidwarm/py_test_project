@@ -269,6 +269,26 @@ def translateNum2(num: int) -> int:
             ans[i] += ans[i - 2] if i > 1 else 1
     return ans[-1]
 
+def groupAnagrams(strs: List[str]) -> List[List[str]]:
+    '''
+    给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+    :param self:
+    :param strs:
+    :return:
+    '''
+    map_dict = {}
+    for val in strs:
+        val_key = ''.join(sorted(val))
+        if val_key in map_dict.keys():
+            map_dict[val_key].insert(0, val)
+        else:
+            map_dict[val_key] = [val]
+    ans = []
+    for val in map_dict.values():
+        val.sort()
+        ans.append(val)
+    ans.reverse()
+    return ans
 
 if __name__ == '__main__':
     # print(minDistance2('horse', 'ros'))
@@ -282,4 +302,5 @@ if __name__ == '__main__':
     # print(data_list)
     # print(numIslands(data_list))
     # print(jiu_gong('22 5555 22 666 00 88 888 7777 4444 666 44'))
-    translateNum(12256)
+    # translateNum(12256)
+    groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
