@@ -6,6 +6,7 @@
 
 
 from typing import List
+import collections
 
 def minDistance(word1: str, word2: str) -> int:
     '''
@@ -290,6 +291,14 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     ans.reverse()
     return ans
 
+
+def groupAnagrams2(strs: List[str]) -> List[List[str]]:
+    ans = collections.defaultdict(list)
+    for s in strs:
+        ans[tuple(sorted(s))].append(s)
+    print(ans.values())
+    return ans.values()
+
 if __name__ == '__main__':
     # print(minDistance2('horse', 'ros'))
     # print(minDistance2('intention', 'execution'))
@@ -303,4 +312,4 @@ if __name__ == '__main__':
     # print(numIslands(data_list))
     # print(jiu_gong('22 5555 22 666 00 88 888 7777 4444 666 44'))
     # translateNum(12256)
-    groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
+    groupAnagrams2(["eat", "tea", "tan", "ate", "nat", "bat"])
