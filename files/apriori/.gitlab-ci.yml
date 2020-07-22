@@ -1,0 +1,69 @@
+stages:
+  - build
+  - package
+  - deploy
+
+maven-build:
+  stage: build
+  tags:
+    - java
+  only:
+    refs:
+      - dev
+      - test
+      - master
+  variables:
+    MAVEN_OPTS: "-Dmaven.test.skip=true"
+    MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  script:
+    - mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    paths:
+      - target/*.jar
+
+docker-build:
+  stage: package
+  tags:
+    - java
+  variables:
+    DOCKER_IMAGE_NAME: registry.prod.bbdops.com/canghai/ai-server
+  script:
+    - docker build -t $DOCKER_IMAGE_NAME:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_NAME:$CI_COMMIT_BRANCH -t $DOCKER_IMAGE_NAME:latest .
+    - docker push $DOCKER_IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $DOCKER_IMAGE_NAME:$CI_COMMIT_BRANCH
+    - docker push $DOCKER_IMAGE_NAME:latest
+
+.kubernetes-deploy:
+  stage: deploy
+  tags:
+    - java
+  before_script:
+    - sed -i 's/$CI_COMMIT_SHORT_SHA/'"$CI_COMMIT_SHORT_SHA"'/' deployment.yml
+
+kubernetes-deploy-development:
+  extends: .kubernetes-deploy
+  only:
+    refs:
+      - dev
+  script:
+    - sed -i 's/$SPRING_PROFILES_ACTIVE/dev/' deployment.yml
+    - kubectl apply -f deployment.yml -n canghai --kubeconfig=$HOME/.kube/development-config.yml
+
+kubernetes-deploy-testing:
+  extends: .kubernetes-deploy
+  only:
+    refs:
+      - test
+  script:
+    - sed -i 's/$SPRING_PROFILES_ACTIVE/test/' deployment.yml
+    - kubectl apply -f deployment.yml -n canghai --kubeconfig=$HOME/.kube/testing-config.yml
+
+kubernetes-deploy-production:
+  extends: .kubernetes-deploy
+  only:
+    refs:
+      - master
+  when: manual
+  script:
+    - sed -i 's/$SPRING_PROFILES_ACTIVE/prod/' deployment.yml
+    - kubectl apply -f deployment.yml -n canghai --kubeconfig=$HOME/.kube/production-config.yml

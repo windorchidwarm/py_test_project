@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-server
+  template:
+    metadata:
+      labels:
+        app: ai-server
+    spec:
+      imagePullSecrets:
+        - name: bbd-docker-registry
+      containers:
+        - image: registry.prod.bbdops.com/canghai/ai-server:$CI_COMMIT_SHORT_SHA
+          name: ai-server
+          env:
+            - name: spring.profiles.active
+              value: $SPRING_PROFILES_ACTIVE
+            - name: eureka.instance.hostname
+              value: ai-server
+          resources:
+            requests:
+              memory: 0.2Gi
+              cpu: 0.2
+            limits:
+              memory: 1Gi
+              cpu: 1
+          ports:
+            - containerPort: 8080
+              name: ai-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-server
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: ai-server
