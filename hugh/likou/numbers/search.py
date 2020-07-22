@@ -105,8 +105,45 @@ def minArray(numbers: List[int]) -> int:
     return numbers[r]
 
 
+def searchRange(nums: List[int], target: int) -> List[int]:
+    '''
+    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+    你的算法时间复杂度必须是 O(log n) 级别。
+    如果数组中不存在目标值，返回 [-1, -1]。
+    :param self:
+    :param nums:
+    :param target:
+    :return:
+    '''
+    if len(nums) == 0: return [-1, -1]
+    min_l = max_l = 0
+    min_r = max_r = len(nums) - 1
+    while min_l < min_r:
+        min_mid = (min_l + min_r) // 2
+        if nums[min_mid] == target:
+            min_r = min_mid
+        elif nums[min_mid] > target:
+            min_r = min_mid
+        else:
+            min_l = min_mid + 1
+
+    while max_l < max_r:
+        max_mid = (max_l + max_r) // 2
+        if nums[max_mid] == target:
+            max_l = max_mid + 1
+        elif nums[max_mid] > target:
+            max_r = max_mid - 1
+        else:
+            max_l = max_mid + 1
+    if min_r < 0 or nums[min_r] != target:
+        return [-1, -1]
+    if nums[max_l] > target:
+        max_l -= 1
+    return [min_r, max_l]
+
 
 if __name__ == '__main__':
     # print(search([3,1], 1))
     # print(searchInsert([1,3,5,6], 7))
-    print(minArray([3,1,1]))
+    # print(minArray([3,1,1]))
+    print(searchRange([5,7,7,8,8,10], 7))
