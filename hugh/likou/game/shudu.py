@@ -41,6 +41,15 @@ def isValidSudoku(board: List[List[str]]) -> bool:
                     three[pre][int(val) - 1] = 1
     return True
 
+def check_num(i, j, key, row, line, box):
+    if row[i][key] != 0:
+        return False
+    if line[j][key] != 0:
+        return False
+    pre = (i // 3) * 3 + (j // 3)
+    if box[pre][key] != 0:
+        return False
+    return True
 
 def solveSudoku(board: List[List[str]]) -> None:
     '''
@@ -54,25 +63,47 @@ def solveSudoku(board: List[List[str]]) -> None:
         else:
             return i, j + 1
 
-    def solveSudokuMain(board, i, j):
+    def solveSudokuMain(board, i, j, row, line, box):
         m, n = get_next(i, j)
+        pre = (i // 3) * 3 + (j // 3)
         if board[i][j] == '.':
             for k in range(9):
-                board[i][j] = str(k + 1)
-                if isValidSudoku(board):
+                if check_num(i, j, k, row, line, box):
+
+                    row[i][k] = 1
+                    line[j][k] = 1
+                    box[pre][k] = 1
+                    board[i][j] = str(k + 1)
                     if j == 8 and i == 8:
                         return True
-                    elif solveSudokuMain(board, m, n):
+                    elif solveSudokuMain(board, m, n, row, line, box):
                         return True
+                    else:
+                        row[i][k] = 0
+                        line[j][k] = 0
+                        box[pre][k] = 0
             board[i][j] = '.'
             return False
         else:
             if j == 8 and i == 8:
                 return True
             else:
-                return solveSudokuMain(board, m, n)
+                return solveSudokuMain(board, m, n, row, line, box)
 
-    solveSudokuMain(board, 0, 0)
+
+
+    row = [[0 for i in range(9)] for i in range(9)]
+    line = [[0 for i in range(9)] for i in range(9)]
+    box = [[0 for i in range(9)] for i in range(9)]
+    for i in range(9):
+        for j in range(9):
+            if board[i][j] != '.':
+                pre = (i // 3) * 3 + (j // 3)
+                k = int(board[i][j]) - 1
+                row[i][k] = 1
+                line[j][k] = 1
+                box[pre][k] = 1
+    solveSudokuMain(board, 0, 0, row, line, box)
     print(board)
 
 
