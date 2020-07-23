@@ -33,9 +33,21 @@ def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
     ans.reverse()
     return ans
 
-
+def combinationSum2(candidates: List[int], target: int) -> List[List[int]]:
+    '''
+    用背包问题解
+    :param candidates:
+    :param target:
+    :return:
+    '''
+    dp = [[[]] if j == 0 else [] for j in range(target + 1)]
+    for candidate in candidates:
+        for i in range(candidate, target + 1):
+            print(dp)
+            dp[i] += [res + [candidate] for res in dp[i - candidate]]
+    return dp[-1]
 
 if __name__ == '__main__':
     '''
     '''
-    print(combinationSum([2,3,6,7], 7))
+    print(combinationSum2([2,3,6,7], 7))
