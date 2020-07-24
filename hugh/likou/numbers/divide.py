@@ -87,7 +87,37 @@ def divisorGame2(N: int) -> bool:
                 break
     return f[N]
 
+
+def smallestRepunitDivByK(K: int) -> int:
+    '''
+    给定正整数 K，你需要找出可以被 K 整除的、仅包含数字 1 的最小正整数 N。
+    返回 N 的长度。如果不存在这样的 N，就返回 -1。
+    :param K:
+    :return:
+    '''
+    if K % 2 == 0 or K % 5 == 0: return -1
+    ans = 1
+    data = 1
+    while True:
+        print(ans, data)
+        if data == K or data == 0:
+            break
+        elif K < data:
+            data = data % K
+        else:
+            add = len(str(K)) - len(str(data))
+            if add > 0:
+                data = data * (10 ** add) + int('1' * add)
+                ans += add
+
+            if data < K:
+                data = data * 10 + 1
+                ans += 1
+    return ans
+
+
 if __name__ == '__main__':
     '''
     '''
-    print(divisorGame2(6))
+    # print(divisorGame2(6))
+    print(smallestRepunitDivByK(382998329323))
