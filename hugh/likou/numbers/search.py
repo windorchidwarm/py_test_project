@@ -142,8 +142,50 @@ def searchRange(nums: List[int], target: int) -> List[int]:
     return [min_r, max_l]
 
 
+def firstMissingPositive(nums: List[int]) -> int:
+    '''
+    给你一个未排序的整数数组，请你找出其中没有出现的最小的正整数。
+    输入: [1,2,0]
+    输出: 3
+    输入: [7,8,9,11,12]
+    输出: 1
+    :param nums:
+    :return:
+    '''
+    n = len(nums)
+    # 我们将数组中所有小于等于 00 的数修改为 N+1N+1
+    for i in range(n):
+        if nums[i] <= 0:
+            nums[i] = n + 1
+
+    # 我们遍历数组中的每一个数 xx，它可能已经被打了标记，因此原本对应的数为 |x|∣x∣，
+    # 其中 |\,|∣∣ 为绝对值符号。如果 |x| \in [1, N]∣x∣∈[1,N]，
+    # 那么我们给数组中的第 |x| - 1∣x∣−1 个位置的数添加一个负号。
+    # 注意如果它已经有负号，不需要重复添加；
+    for i in range(n):
+        num = abs(nums[i])
+        if num <= n:
+            nums[num - 1] = - abs(nums[num - 1])
+
+    # 在遍历完成之后，如果数组中的每一个数都是负数，那么答案是 N+1N+1，否则答案是第一个正数的位置加 11。
+    for i in range(n):
+        if nums[i] > 0:
+            return i + 1
+    return n + 1
+
+def firstMissingPositive2(nums: List[int]) -> int:
+    n = len(nums)
+    for i in range(n):
+        while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:
+            nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+    for i in range(n):
+        if nums[i] != i + 1:
+            return i + 1
+    return n + 1
+
 if __name__ == '__main__':
     # print(search([3,1], 1))
     # print(searchInsert([1,3,5,6], 7))
     # print(minArray([3,1,1]))
-    print(searchRange([5,7,7,8,8,10], 7))
+    # print(searchRange([5,7,7,8,8,10], 7))
+    print(firstMissingPositive([1]))
