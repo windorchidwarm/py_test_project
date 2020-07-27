@@ -88,7 +88,7 @@ def minArray(numbers: List[int]) -> int:
     :param numbers:
     :return:
     '''
-    if len(numbers) == 0: return
+    if len(numbers) == 0: return -1
     if len(numbers) == 1: return numbers[0]
     l = 0
     r = len(numbers) - 1
