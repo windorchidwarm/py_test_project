@@ -116,8 +116,68 @@ def smallestRepunitDivByK(K: int) -> int:
     return ans
 
 
+def multiply(num1: str, num2: str) -> str:
+    if num1 == '0' or num2 == '0': return '0'
+    ans = '0'
+    for i in range(len(num1)):
+        m_flag = 0
+        m_ans = ''
+        v = int(num1[-i-1])
+        for j in range(len(num2)):
+            u = int(num2[-j-1])
+            ret = v * u + m_flag
+            if ret > 9:
+                m_flag = ret // 10
+                ret = ret % 10
+            else:
+                m_flag = 0
+            m_ans = str(ret) + m_ans
+        if m_flag > 0:
+            m_ans = str(m_flag) + m_ans
+        print(m_ans, v * int(num2), v)
+        m_ans += '0' * i
+        print(ans, m_ans)
+        ans = add(ans, m_ans)
+    return ans
+
+
+def add(num1: str, num2: str) -> str:
+    c_flag = 0
+    t_len = min(len(num1), len(num2))
+    ans = ''
+    for i in range(1, t_len + 1):
+        ret = int(num1[-i]) + int(num2[-i]) + c_flag
+        if ret > 9:
+            c_flag = 1
+            ret = ret % 10
+            ans = str(ret) + ans
+        else:
+            c_flag = 0
+            ans = str(ret) + ans
+    max_num = num1 if len(num2) < len(num1) else num2
+    while c_flag > 0:
+        if t_len < len(max_num):
+            ret = int(max_num[-t_len-1]) + c_flag
+            if ret > 9:
+                c_flag = 1
+                ret = ret % 10
+                ans = str(ret) + ans
+            else:
+                c_flag = 0
+                ans = str(ret) + ans
+            t_len += 1
+        else:
+            c_flag = 0
+            ans = '1' + ans
+
+    if t_len < len(max_num):
+        ans = max_num[: -t_len] + ans
+    return ans
+
 if __name__ == '__main__':
     '''
     '''
     # print(divisorGame2(6))
-    print(smallestRepunitDivByK(382998329323))
+    # print(smallestRepunitDivByK(382998329323))
+    print(add('4123', '11929'))
+    print(multiply('254354', '3435345345'))
