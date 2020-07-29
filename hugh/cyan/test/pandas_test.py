@@ -15,3 +15,5 @@ if __name__ == '__main__':
     df['id'] = df['id'].apply(lambda x: str(x))
     df = df[df.apply(lambda x: str(x['id']) in x['class'], axis=1)]
     print(df)
+    df = df[df['id'].str.endswith('2', na=False)]
+    print(df)
