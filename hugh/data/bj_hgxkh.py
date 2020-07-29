@@ -122,7 +122,7 @@ df_27 = df_class[( ~df_class['班级名称（外）'].str.contains('取消')) &
                  (df_class['标准部门'].isin(['少儿部', '中学班课部', '中学小组课部', '中学一对一部'])) &
                  (df_class['标准人数'] >= 6) &
                  (df_class['续班类型'].isin(['可续','连季续','隔季续']))  &
-                 (df_class['主带课老师'].isnull)
+                 (df_class['主带课老师'].isnull())
                  ]
 
 
