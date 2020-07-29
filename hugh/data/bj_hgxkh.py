@@ -111,7 +111,7 @@ df_24 = df_class[( ~df_class['班级名称（外）'].str.contains('取消|全�
 df_25 = df_class[( ~df_class['班级名称（外）'].str.contains('取消')) &
                  (~df_class['产品体系'].isin(['计费体系']))  &
                  (df_class['班级名称（外）'].str.contains('住宿|营')) &
-                 (~df_class['上课形式'].str.contains('住宿'))]
+                 (~df_class['上课形式'].str.contains('住宿', na=False))]
 
 #26-班级状态
 df_26 = df_class[(df_class['班级状态'].isin(['修改待审核','取消待审核']))]
