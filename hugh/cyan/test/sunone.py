@@ -84,7 +84,20 @@ if __name__ == '__main__':
     '''
     测试一些内容
     '''
-    testFDSClientUpload()
+    print(os.path.dirname(os.path.realpath(__file__)))
+    df = pd.read_csv(r'C:\Users\BBD\Desktop\test\tmp\2.csv')
+    print(df)
+    df.insert(len(df.columns), 'execute', 'ata')
+    print(df)
+
+    file_path = r'C:\Users\BBD\Desktop\test\tmp\info.txt'
+    df.to_csv(file_path, sep='|', index=False)
+    # file_handle = open(file_path, 'w')
+    # file_handle.write("index" + "," + "Kernel" +", "+" Context"+", "+"Stream"+'\n') # 写列名
+    # serise = str(i) + "," + kernel_name_new + "," + context + "," + stream  # 每个元素都是字符串，使用逗号分割拼接成一个字符串
+    # file_handle.write(serise + '\n')  # 末尾使用换行分割每一行。
+    # file_handle.close()
+    # testFDSClientUpload()
 
     # a = [1, 3, 5, 1]
     # b = [5, 2, 9, 5]
