@@ -71,6 +71,11 @@ if __name__ == '__main__':
     deployData = session.query(TMrecProcess).all()
     msgs = {}
     for msg in deployData:
+        data = json.dumps(msg, cls=new_alchemy_encoder(), check_circular=False)
+        print(data)
         msgs[msg.id] = msg
+    msgs['dd'] = deployData
     publishConfig = json.dumps(msgs, cls=new_alchemy_encoder(), check_circular=False)
     print(publishConfig)
+
+    print(json.dumps(deployData, cls=new_alchemy_encoder(), check_circular=False))
