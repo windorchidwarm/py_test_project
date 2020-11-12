@@ -3,6 +3,7 @@
 
 import pandas as pd
 import sqlalchemy
+import json
 
 def mappingDfTypes(df):
     dtypedict = {}
@@ -46,7 +47,11 @@ if __name__ == '__main__':
     dtypedict = mappingDfTypes(df)
     df = df.set_index('bbd_unique_id')
     print(df)
-    df.to_sql(tableName, engine, if_exists="replace", dtype=dtypedict)
+    # df.to_sql(tableName, engine, if_exists="replace", dtype=dtypedict)
+    dd = {}
+    print(type(df.columns))
+    dd['dd'] = list(df.columns)
+    print(json.dumps(dd))
 
 
 #     sqlStr = '''select * from ({sql}) a limit 1000  '''.format(sql='select * from test_data')
